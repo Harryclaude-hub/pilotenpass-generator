@@ -1,6 +1,6 @@
 # Ausweis-Atlas
 
-Nachschlageseite: Land wählen und sehen, wo es die öffentlichen Muster seines Reisepasses und Personalausweises gibt. Sprache der Beschriftung passt zum Land (14 Sprachen, Arabisch von rechts nach links). Rund 170 Länder, mit Suche und Regionenfilter.
+Nachschlageseite: Land wählen und sehen, wo es die öffentlichen Muster seines Reisepasses und Personalausweises gibt. Sprache der Beschriftung passt zum Land (14 Sprachen, Arabisch von rechts nach links). 213 Länder und Gebiete, mit Suche und Regionenfilter.
 
 Reference page: pick a country and jump to the public specimens of its passport and national ID card. Labels follow the country's language.
 
