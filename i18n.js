@@ -14,6 +14,17 @@ const COUNTRIES=[
  {name:'Polska',lang:'pl',v:THEMES[1].v},{name:'الإمارات',lang:'ar',v:THEMES[3].v},{name:'السعودية',lang:'ar',v:THEMES[2].v},
  {name:'مصر',lang:'ar',v:THEMES[0].v},{name:'Nederland',lang:'nl',v:THEMES[1].v},{name:'Hrvatska',lang:'hr',v:THEMES[1].v},
  {name:'Ελλάδα',lang:'el',v:THEMES[1].v},{name:'Sverige',lang:'sv',v:THEMES[1].v},
+ {name:'Belgique / België',lang:'fr',v:THEMES[1].v},{name:'Česko',lang:'en',v:THEMES[1].v},{name:'Magyarország',lang:'en',v:THEMES[1].v},
+ {name:'România',lang:'en',v:THEMES[1].v},{name:'България',lang:'en',v:THEMES[2].v},{name:'Srbija',lang:'hr',v:THEMES[0].v},
+ {name:'Slovenija',lang:'hr',v:THEMES[1].v},{name:'Slovensko',lang:'en',v:THEMES[1].v},{name:'Україна',lang:'en',v:THEMES[1].v},
+ {name:'Norge',lang:'sv',v:THEMES[0].v},{name:'Danmark',lang:'sv',v:THEMES[0].v},{name:'Suomi',lang:'en',v:THEMES[1].v},
+ {name:'中国 China',lang:'en',v:THEMES[0].v},{name:'日本 Japan',lang:'en',v:THEMES[1].v},{name:'한국 Korea',lang:'en',v:THEMES[2].v},
+ {name:'ประเทศไทย Thailand',lang:'en',v:THEMES[0].v},{name:'Việt Nam',lang:'en',v:THEMES[2].v},{name:'Indonesia',lang:'en',v:THEMES[2].v},
+ {name:'Philippines',lang:'en',v:THEMES[1].v},{name:'Pakistan',lang:'en',v:THEMES[2].v},{name:'Bangladesh',lang:'en',v:THEMES[2].v},
+ {name:'ایران Iran',lang:'en',v:THEMES[2].v},{name:'Israel',lang:'en',v:THEMES[1].v},{name:'لبنان',lang:'ar',v:THEMES[0].v},
+ {name:'المغرب',lang:'ar',v:THEMES[0].v},{name:'الجزائر',lang:'ar',v:THEMES[2].v},{name:'Nigeria',lang:'en',v:THEMES[2].v},
+ {name:'South Africa',lang:'en',v:THEMES[2].v},{name:'Kenya',lang:'en',v:THEMES[0].v},{name:'Colombia',lang:'es',v:THEMES[2].v},
+ {name:'Chile',lang:'es',v:THEMES[1].v},{name:'Perú',lang:'es',v:THEMES[0].v},{name:'New Zealand',lang:'en',v:THEMES[3].v},
  {name:'… (frei / free)',lang:null,v:null}
 ];
 const I18N={

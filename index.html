@@ -57,7 +57,32 @@ main{padding:26px;display:flex;flex-wrap:wrap;gap:30px;align-content:flex-start;
 .f small{display:block;font:5.8pt system-ui;text-transform:uppercase;letter-spacing:.1em;color:color-mix(in srgb,var(--c1) 70%,#555)}
 .f b{font:700 9.5pt Georgia,serif;letter-spacing:.01em}
 .quote{font:italic 10.5pt Georgia,serif;border-inline-start:1mm solid var(--c1);padding:.6mm 3mm;margin:.5mm 0}
+body.home{display:block}
+body.home aside,body.home main{display:none}
+body:not(.home) #home{display:none}
+#home{min-height:100vh;padding:40px 20px;background:radial-gradient(120% 80% at 50% 0,color-mix(in srgb,var(--acc) 12%,var(--bg)),var(--bg))}
+.hwrap{max-width:1000px;margin:0 auto}
+.hwrap h1{font-size:34px;letter-spacing:-.02em;margin:0 0 6px}
+.hwrap .sub{font-size:16px;opacity:.75;margin:0 0 18px}
+#search{max-width:420px;margin-bottom:20px;padding:11px 14px;font-size:15px}
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:26px}
+.tile{all:unset;box-sizing:border-box;cursor:pointer;border-radius:10px;padding:14px 12px;min-height:92px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(150deg,var(--a),color-mix(in srgb,var(--a) 62%,#000));color:var(--b);box-shadow:0 6px 16px rgba(0,0,0,.28),inset 0 0 0 1px rgba(255,255,255,.12);transition:transform .15s}
+.tile:hover,.tile:focus-visible{transform:translateY(-3px)}
+.tile b{font:700 15px Georgia,serif;letter-spacing:.03em}
+.tile i{font:11px system-ui;opacity:.8;font-style:normal;margin-top:2px;letter-spacing:.08em;text-transform:uppercase}
 .cover.back{justify-content:center}
+.page.wide{width:176mm;height:125mm;border-radius:3mm;padding:6mm 9mm 12mm;gap:2mm}
+.wdata{display:grid;grid-template-columns:40mm 1fr;gap:6mm}
+.wl{display:flex;flex-direction:column;gap:2mm}
+.wide .photo{width:40mm;height:50mm}
+.wide .sig{height:7mm;margin-top:1mm}
+.wr{display:grid;grid-template-columns:1fr 1fr;column-gap:5mm;align-content:start}
+.wr .span2{grid-column:1/3}
+.wide .holo{top:12mm;width:15mm;height:15mm}
+.wide .ghost{bottom:20mm;inset-inline-end:10mm}
+.wide .stamp{bottom:24mm}
+.wide .quote{margin-top:1mm}
+.wide .mrz{font-size:7.6pt}
 .blank .f b{display:block;min-height:5mm;border-bottom:.25mm dotted #666}
 .blank .quote{min-height:14mm}
 .blank .cp{min-height:16mm;border-bottom:.25mm dotted #666;width:100%}
@@ -66,7 +91,7 @@ main{padding:26px;display:flex;flex-wrap:wrap;gap:30px;align-content:flex-start;
 .two b{font-size:8.6pt}
 .sig{height:8mm;margin-bottom:2.5mm;border-bottom:.25mm dotted #555;position:relative}
 .sig span{position:absolute;inset-inline-start:0;bottom:-3.6mm;font:5.8pt system-ui;text-transform:uppercase;letter-spacing:.1em;color:#777}
-.sig i{position:absolute;inset-inline-start:3mm;bottom:1.5mm;font:italic 15pt "Segoe Script","Brush Script MT",cursive;color:#1c3a7a}
+.sig i{position:absolute;inset-inline-start:3mm;bottom:1.5mm;font:italic 11pt "Segoe Script","Brush Script MT",cursive;color:#1c3a7a}
 .mrz{font:700 8pt/1.5 "OCR B","Lucida Console","Courier New",monospace;letter-spacing:.04em;margin-top:auto;background:rgba(255,255,255,.55);padding:1.8mm 1.5mm;border-radius:.8mm;direction:ltr;text-align:left;white-space:nowrap;overflow:hidden}
 .micro{font:3.6pt system-ui;letter-spacing:.12em;color:var(--c1);opacity:.8;overflow:hidden;white-space:nowrap;text-transform:uppercase}
 .holo{position:absolute;inset-inline-end:7mm;top:22mm;width:19mm;height:19mm;border-radius:50%;z-index:3;
@@ -102,7 +127,17 @@ main{padding:26px;display:flex;flex-wrap:wrap;gap:30px;align-content:flex-start;
 </style>
 </head>
 <body>
+<section id="home">
+ <div class="hwrap">
+  <h1>Pilotenpass Generator</h1>
+  <p class="sub">Wähle das Land für den Pass. Choose the country for the passport.</p>
+  <input type="text" id="search" placeholder="Suchen / Search …" autocomplete="off">
+  <div id="grid"></div>
+  <p class="hint">Scherzartikel für die Pensionsfeier. Eigenes Design, keine Kopie echter Dokumente, kein gültiger Ausweis. Alles bleibt auf deinem Gerät.<br>Novelty item for a retirement party. Original design, not a copy of real documents, not a valid ID. Everything stays on your device.</p>
+ </div>
+</section>
 <aside>
+ <button type="button" id="backHome" style="background:var(--line);color:var(--ink);margin-bottom:12px">← Länder / Countries</button>
  <h1 id="t_title">Pilotenpass Generator</h1>
  <p class="hint" id="t_hint"></p>
 
@@ -202,22 +237,22 @@ function render(){
   $('out').classList.toggle('blank',blank);
   $('out').innerHTML=`
   <div class="item"><div class="page cover" dir="${dir}"><div class="land foil">${v.land}</div>${plane(c2)}<div><div class="typ foil">${v.typ}</div><div class="sub foil">${v.sub}</div></div>${fake}</div><span class="cap">Cover</span></div>
-  <div class="item"><div class="page inner" dir="${dir}">${guilloche(c1,0)}${wm}<span class="holo"></span>
+  <div class="item"><div class="page inner wide" dir="${dir}">${guilloche(c1,0)}${wm}<span class="holo"></span>
     <h3><span>${v.typ}</span><span>${v.land}</span></h3>
-    <div class="data">${photo('fotoMain','photo',L.photo)}
-     <div>
+    <div class="wdata">
+     <div class="wl">${photo('fotoMain','photo',L.photo)}<div class="sig"><i>${sigName}</i><span>${esc(L.sig)}</span></div></div>
+     <div class="wr">
       <div class="f"><small>${esc(L.surname)}</small><b>${v.nn}</b></div>
       <div class="f"><small>${esc(L.given)}</small><b>${v.vn}</b></div>
       <div class="f"><small>${esc(L.nick)}</small><b>${v.nick}</b></div>
       <div class="f"><small>${esc(L.rank)}</small><b>${v.rang}</b></div>
+      <div class="f"><small>${esc(L.birth)}</small><b>${v.gb}</b></div>
+      <div class="f"><small>${esc(L.nat)}</small><b>${v.nat}</b></div>
+      <div class="f"><small>${esc(L.issued)}</small><b>${v.ort}</b></div>
+      <div class="f"><small>${esc(L.valid)}</small><b>${v.gueltig}</b></div>
+      <div class="f span2"><small>${esc(L.hours)}</small><b>${v.fh}</b></div>
+      <div class="quote span2">${v.zit}</div>
      </div></div>
-    <div class="two"><div class="f"><small>${esc(L.birth)}</small><b>${v.gb}</b></div>
-    <div class="f"><small>${esc(L.nat)}</small><b>${v.nat}</b></div></div>
-    <div class="f"><small>${esc(L.hours)}</small><b>${v.fh}</b></div>
-    <div class="two"><div class="f"><small>${esc(L.issued)}</small><b>${v.ort}</b></div>
-    <div class="f"><small>${esc(L.valid)}</small><b>${v.gueltig}</b></div></div>
-    <div class="quote">${v.zit}</div>
-    <div class="sig"><i>${sigName}</i><span>${esc(L.sig)}</span></div>
     <div class="mrz" style="margin-top:auto">${esc(mrz1)}<br>${esc(mrz2)}</div>
     ${micro}
     ${imgs.fotoMain?`<div class="ghost" style="background-image:url(${imgs.fotoMain})"></div>`:''}
@@ -272,6 +307,22 @@ fields.forEach(i=>$(i).addEventListener('input',render));
 ['fotoMain','v1','v2','v3'].forEach(id=>$(id).addEventListener('change',e=>{
   const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{imgs[id]=r.result;render()};r.readAsDataURL(f);
 }));
+function buildGrid(q){
+  q=(q||'').toLowerCase();
+  $('grid').innerHTML=COUNTRIES.map((c,i)=>({c,i})).filter(o=>!q||o.c.name.toLowerCase().includes(q)).map(o=>{
+    const [a,b]=(o.c.v||THEMES[3].v).split('|');
+    return `<button class="tile" style="--a:${a};--b:${b}" data-i="${o.i}"><b>${esc(o.c.name)}</b><i>${o.c.lang?esc(I18N[o.c.lang].langName):'free'}</i></button>`;
+  }).join('');
+}
+$('grid').addEventListener('click',e=>{
+  const t=e.target.closest('.tile');if(!t)return;
+  $('country').value=t.dataset.i;setCountry();
+  document.body.classList.remove('home');window.scrollTo(0,0);
+});
+$('search').addEventListener('input',e=>buildGrid(e.target.value));
+$('backHome').addEventListener('click',()=>{document.body.classList.add('home');window.scrollTo(0,0)});
+document.body.classList.add('home');
+buildGrid('');
 init();
 </script>
 </body>
