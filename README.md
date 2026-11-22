@@ -1,31 +1,24 @@
-# Pilotenpass Generator
+# Ausweis-Atlas
 
-Spaß-Pass und Ausweiskarte für eine Pensionsfeier. Land und Sprache wählen, Foto, Zitate und Visa-Bilder einfügen, drucken oder als PDF speichern.
+Nachschlageseite: Land wählen und sehen, wo es die öffentlichen Muster seines Reisepasses und Personalausweises gibt. Sprache der Beschriftung passt zum Land (14 Sprachen, Arabisch von rechts nach links). Rund 170 Länder, mit Suche und Regionenfilter.
 
-A fun pilot passport and ID card for a retirement party. Pick a country and language, add photos and quotes, print or save as PDF.
+Reference page: pick a country and jump to the public specimens of its passport and national ID card. Labels follow the country's language.
 
-**Website / Website:** https://harryclaude-hub.github.io/pilotenpass-generator/
+**Website:** https://harryclaude-hub.github.io/pilotenpass-generator/
 
-## Wichtig / Important
+## Was die Seite tut
 
-- Das ist ein **Scherzartikel**. Es ist eine Parodie mit eigenem Design, keine Kopie eines echten Reisepasses. Es gibt keine Staatswappen und keine echten Sicherheitsmerkmale.
-- Jede Seite trägt den Aufdruck "Scherzartikel / Novelty item" und ein Wasserzeichen. Der Hinweis lässt sich nicht abschalten.
-- Nicht zum Reisen, nicht zum Ausweisen, nicht zum Täuschen von Behörden oder Dritten.
-- Alles läuft im Browser. Fotos und Texte werden nirgends hochgeladen.
+Sie speichert und zeigt selbst keine Dokumente. Pro Land führt sie zu:
 
-- This is a **novelty item**: a parody with its own design, not a copy of a real passport. No national emblems, no real security features.
-- Every page carries a "Novelty item" strip and a watermark that cannot be switched off.
-- Not for travel, identification, or deceiving authorities or anyone else.
-- Everything runs in your browser. Photos and text are never uploaded.
+- **PRADO**, dem öffentlichen Register des Rates der EU. Dort stehen pro Land alle Dokumentenvarianten (Reisepass, Personalausweis und weitere) mit Vorderseite, Rückseite und Beschreibung der Sicherheitsmerkmale.
+- **Wikipedia** (Beschreibung und Bilder) und **Wikimedia Commons** (Fotos von Mustern).
 
-## Sprachen / Languages
+Das sind Anschauungsmuster zum Nachschlagen, keine Vorlagen zum Nachbauen.
 
-Deutsch, English, Français, Español, Italiano, Português, Türkçe, Русский, Polski, Nederlands, Hrvatski, Ελληνικά, Svenska, العربية (rechts nach links).
+## Hinweise
 
-## Benutzen / Use
+- Die Länderseiten von PRADO sind für alle Länder in der Liste geprüft (22.11.2026), außer Indonesien. Dort fehlt der PRADO-Link.
+- Die Seiten dahinter sind meist englisch.
+- Keine Daten werden gesammelt, alles läuft im Browser.
 
-1. Website öffnen, Land und Sprache wählen.
-2. Namen, Rang, Zitat und Fotos eintragen.
-3. "Drucken" klicken. Im Druckdialog "Hintergrundgrafiken" einschalten, Skalierung 100 %.
-
-Lokal: `index.html` und `i18n.js` im selben Ordner lassen und `index.html` im Browser öffnen.
+Frühere Version (Pilotenpass-Generator) liegt in der Git-Historie, Commit `0112126` und älter.

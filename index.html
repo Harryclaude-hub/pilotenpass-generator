@@ -3,327 +3,108 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pilotenpass Generator</title>
-<meta name="description" content="Spaß-Pass und Ausweiskarte für die Pensionsfeier: Land, Sprache, Fotos und Zitate wählen, drucken. Scherzartikel, kein gültiges Dokument.">
+<title>Ausweis-Atlas</title>
+<meta name="description" content="Nachschlageseite: Wie sehen Reisepass und Personalausweis eines Landes aus? Land wählen und zu den öffentlichen Mustern gehen.">
 <style>
-:root{--bg:#ece9e2;--ink:#1c1c1e;--panel:#fff;--line:#d8d4ca;--acc:#0a5cff;--c1:#7a0f1f;--c2:#e8c872}
-@media (prefers-color-scheme:dark){:root{--bg:#141416;--ink:#f2f2f2;--panel:#212124;--line:#38383c}}
+:root{--bg:#f4f2ee;--ink:#1b1c1f;--mut:#6b6d73;--panel:#fff;--line:#dedad2;--acc:#1f4fd8;--acc2:#e9eefc}
+@media (prefers-color-scheme:dark){:root{--bg:#121316;--ink:#eceef2;--mut:#9a9da6;--panel:#1b1d22;--line:#2d3037;--acc:#7da2ff;--acc2:#1c2540}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 system-ui,"Segoe UI",sans-serif;display:grid;grid-template-columns:350px 1fr;min-height:100vh}
-aside{padding:18px;background:var(--panel);border-right:1px solid var(--line);overflow:auto;height:100vh;position:sticky;top:0}
-h1{font-size:19px;margin:0 0 4px}
-.hint{font-size:12px;opacity:.7;margin:0 0 12px}
-fieldset{border:1px solid var(--line);border-radius:12px;margin:0 0 12px;padding:10px 12px 12px}
-legend{font-weight:600;font-size:13px;padding:0 6px}
-label{display:block;font-size:12px;margin:9px 0 3px;opacity:.8}
-input[type=text],textarea,select{width:100%;padding:8px 9px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);font:inherit}
-textarea{resize:vertical;min-height:54px}
-input[type=file]{width:100%;font-size:12px}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-button{width:100%;padding:12px;border:0;border-radius:11px;background:var(--acc);color:#fff;font:600 15px system-ui;cursor:pointer}
-main{padding:26px;display:flex;flex-wrap:wrap;gap:30px;align-content:flex-start;justify-content:center}
-.item{display:flex;flex-direction:column;gap:8px;align-items:center}
-.cap{font-size:12px;opacity:.6}
-
-/* ---------- Seiten 125 x 176 mm ---------- */
-.page{width:125mm;height:176mm;position:relative;overflow:hidden;border-radius:2.5mm 4mm 4mm 2.5mm;font-family:Georgia,"Times New Roman",serif;color:#1d1d1d;
- box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 12px 28px rgba(0,0,0,.35),0 2px 5px rgba(0,0,0,.3)}
-.page>*{position:relative;z-index:2}
-.page .gui{position:absolute;inset:0;z-index:1;width:100%;height:100%}
-/* Cover: Kunstleder, Goldprägung */
-.cover{background:
-  radial-gradient(120% 90% at 30% 15%,rgba(255,255,255,.18),transparent 55%),
-  radial-gradient(100% 80% at 80% 100%,rgba(0,0,0,.35),transparent 60%),
-  var(--c1);
- display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:15mm 9mm 12mm;text-align:center}
-.cover::before{content:"";position:absolute;inset:0;z-index:1;opacity:.5;mix-blend-mode:overlay;
- background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .9 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>")}
-.cover::after{content:"";position:absolute;inset:4mm;z-index:1;border:.35mm solid var(--c2);opacity:.55;border-radius:1.5mm}
-.foil{background:linear-gradient(115deg,color-mix(in srgb,var(--c2) 70%,#000) 0%,var(--c2) 22%,#fff8dc 38%,var(--c2) 52%,color-mix(in srgb,var(--c2) 60%,#000) 78%,var(--c2) 100%);
- -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 .3mm .2mm rgba(0,0,0,.55))}
-.cover .land{font:700 17pt Georgia,serif;letter-spacing:.16em;text-transform:uppercase;line-height:1.25}
-.cover .typ{font:600 13.5pt Georgia,serif;letter-spacing:.32em;text-transform:uppercase}
-.cover .sub{font:italic 9.5pt Georgia,serif;margin-top:3mm;letter-spacing:.04em}
-.emblem{width:50mm;height:50mm;filter:drop-shadow(0 .4mm .3mm rgba(0,0,0,.6))}
-/* Innenseiten */
-.inner{background:
-  linear-gradient(90deg,rgba(0,0,0,.10),transparent 7%,transparent 93%,rgba(0,0,0,.06)),
-  radial-gradient(130% 90% at 50% 0,#fffaf0,#f3ead2 70%,#e9dfc3);padding:6mm 9mm 12mm;display:flex;flex-direction:column;gap:1.5mm}
-.inner h3{margin:0;font:700 9.5pt Georgia,serif;letter-spacing:.18em;text-transform:uppercase;color:var(--c1);border-bottom:.3mm solid var(--c1);padding-bottom:1.6mm;display:flex;justify-content:space-between;gap:4mm}
-.wm{position:absolute;inset:-20mm;z-index:1;display:flex;flex-direction:column;justify-content:space-around;transform:rotate(-28deg);font:800 11pt system-ui;letter-spacing:.3em;color:rgba(0,0,0,.055);white-space:nowrap;pointer-events:none}
-.data{display:grid;grid-template-columns:31mm 1fr;gap:5mm}
-.photo{width:31mm;height:39mm;background:#d9d6cf center/cover no-repeat;border:.3mm solid rgba(0,0,0,.35);box-shadow:0 0 0 .6mm #fff,0 .6mm 1.4mm rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;font:8pt system-ui;color:#777;text-align:center;padding:2mm}
-.f{margin-bottom:.6mm}
-.f small{display:block;font:5.8pt system-ui;text-transform:uppercase;letter-spacing:.1em;color:color-mix(in srgb,var(--c1) 70%,#555)}
-.f b{font:700 9.5pt Georgia,serif;letter-spacing:.01em}
-.quote{font:italic 10.5pt Georgia,serif;border-inline-start:1mm solid var(--c1);padding:.6mm 3mm;margin:.5mm 0}
-body.home{display:block}
-body.home aside,body.home main{display:none}
-body:not(.home) #home{display:none}
-#home{min-height:100vh;padding:40px 20px;background:radial-gradient(120% 80% at 50% 0,color-mix(in srgb,var(--acc) 12%,var(--bg)),var(--bg))}
-.hwrap{max-width:1000px;margin:0 auto}
-.hwrap h1{font-size:34px;letter-spacing:-.02em;margin:0 0 6px}
-.hwrap .sub{font-size:16px;opacity:.75;margin:0 0 18px}
-#search{max-width:420px;margin-bottom:20px;padding:11px 14px;font-size:15px}
-#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:26px}
-.tile{all:unset;box-sizing:border-box;cursor:pointer;border-radius:10px;padding:14px 12px;min-height:92px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(150deg,var(--a),color-mix(in srgb,var(--a) 62%,#000));color:var(--b);box-shadow:0 6px 16px rgba(0,0,0,.28),inset 0 0 0 1px rgba(255,255,255,.12);transition:transform .15s}
-.tile:hover,.tile:focus-visible{transform:translateY(-3px)}
-.tile b{font:700 15px Georgia,serif;letter-spacing:.03em}
-.tile i{font:11px system-ui;opacity:.8;font-style:normal;margin-top:2px;letter-spacing:.08em;text-transform:uppercase}
-.cover.back{justify-content:center}
-.page.wide{width:176mm;height:125mm;border-radius:3mm;padding:6mm 9mm 12mm;gap:2mm}
-.wdata{display:grid;grid-template-columns:40mm 1fr;gap:6mm}
-.wl{display:flex;flex-direction:column;gap:2mm}
-.wide .photo{width:40mm;height:50mm}
-.wide .sig{height:7mm;margin-top:1mm}
-.wr{display:grid;grid-template-columns:1fr 1fr;column-gap:5mm;align-content:start}
-.wr .span2{grid-column:1/3}
-.wide .holo{top:12mm;width:15mm;height:15mm}
-.wide .ghost{bottom:20mm;inset-inline-end:10mm}
-.wide .stamp{bottom:24mm}
-.wide .quote{margin-top:1mm}
-.wide .mrz{font-size:7.6pt}
-.blank .f b{display:block;min-height:5mm;border-bottom:.25mm dotted #666}
-.blank .quote{min-height:14mm}
-.blank .cp{min-height:16mm;border-bottom:.25mm dotted #666;width:100%}
-.blank .card .f b{min-height:4mm}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:3mm}
-.two b{font-size:8.6pt}
-.sig{height:8mm;margin-bottom:2.5mm;border-bottom:.25mm dotted #555;position:relative}
-.sig span{position:absolute;inset-inline-start:0;bottom:-3.6mm;font:5.8pt system-ui;text-transform:uppercase;letter-spacing:.1em;color:#777}
-.sig i{position:absolute;inset-inline-start:3mm;bottom:1.5mm;font:italic 11pt "Segoe Script","Brush Script MT",cursive;color:#1c3a7a}
-.mrz{font:700 8pt/1.5 "OCR B","Lucida Console","Courier New",monospace;letter-spacing:.04em;margin-top:auto;background:rgba(255,255,255,.55);padding:1.8mm 1.5mm;border-radius:.8mm;direction:ltr;text-align:left;white-space:nowrap;overflow:hidden}
-.micro{font:3.6pt system-ui;letter-spacing:.12em;color:var(--c1);opacity:.8;overflow:hidden;white-space:nowrap;text-transform:uppercase}
-.holo{position:absolute;inset-inline-end:7mm;top:22mm;width:19mm;height:19mm;border-radius:50%;z-index:3;
- background:conic-gradient(from 40deg,#ff7ad9,#ffd86b,#7dffb2,#6bd0ff,#b28aff,#ff7ad9);opacity:.72;mix-blend-mode:multiply;box-shadow:0 0 0 .3mm rgba(0,0,0,.25) inset}
-.holo::after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.75),transparent 45%,rgba(255,255,255,.4))}
-.ghost{position:absolute;inset-inline-end:8mm;bottom:25mm;width:20mm;height:26mm;background:center/cover;filter:grayscale(1) contrast(.9);opacity:.22;z-index:2;mix-blend-mode:multiply}
-.stamp{position:absolute;inset-inline-end:9mm;bottom:34mm;border:.7mm solid #1c3a7a;color:#1c3a7a;padding:1.3mm 3mm;font:800 8.5pt system-ui;letter-spacing:.06em;transform:rotate(-9deg);opacity:.72;border-radius:1.4mm;text-transform:uppercase;z-index:4;mix-blend-mode:multiply;box-shadow:0 0 0 .3mm #1c3a7a inset}
-.fake{position:absolute;left:0;right:0;bottom:0;z-index:5;background:#111;color:#ffd400;text-align:center;font:700 6.6pt system-ui;padding:1.6mm;letter-spacing:.1em;text-transform:uppercase}
-.visa .vp{flex:1;background:#d9d6cf center/cover no-repeat;border:.3mm solid rgba(0,0,0,.4);box-shadow:0 0 0 1mm #fff,0 .8mm 2mm rgba(0,0,0,.3);margin:1.5mm;display:flex;align-items:center;justify-content:center;color:#777;font:9pt system-ui}
-.visa .cp{font:italic 10.5pt Georgia,serif;text-align:center;min-height:13mm;display:flex;align-items:center;justify-content:center}
-
-/* ---------- Karte 85.6 x 54 mm ---------- */
-.card{width:85.6mm;height:54mm;position:relative;overflow:hidden;border-radius:3.5mm;font-family:system-ui,sans-serif;color:#1d1d1d;
- background:linear-gradient(125deg,#fdfdfb,#e9edf2 55%,#dde3ea);box-shadow:0 10px 24px rgba(0,0,0,.35),0 1px 0 rgba(255,255,255,.7) inset}
-.card>*{position:relative;z-index:2}.card .gui{position:absolute;inset:0;z-index:1;width:100%;height:100%}
-.card .bar{background:linear-gradient(100deg,var(--c1),color-mix(in srgb,var(--c1) 70%,#000));color:var(--c2);padding:2mm 3.5mm;font:700 6.6pt system-ui;letter-spacing:.16em;text-transform:uppercase;display:flex;justify-content:space-between}
-.card .body{display:grid;grid-template-columns:22mm 1fr;gap:3.5mm;padding:3.2mm 3.5mm}
-.card .photo{width:22mm;height:28mm;font-size:6pt;box-shadow:0 0 0 .4mm #fff,0 .4mm 1mm rgba(0,0,0,.3)}
-.card .f small{font-size:4.6pt}.card .f b{font:700 7.4pt system-ui}
-.card .q{position:absolute;inset-inline:3.5mm;bottom:6mm;font:italic 6.4pt Georgia,serif;z-index:3}
-.card .holo{width:11mm;height:11mm;top:auto;bottom:8mm;inset-inline-end:4mm}
-.card .fake{font-size:4.6pt;padding:1mm}
-
-@media print{
- @page{size:A4;margin:8mm}
- body{display:block;background:#fff}
- aside,.cap{display:none}
- main{padding:0;gap:6mm;justify-content:flex-start}
- .page,.card{box-shadow:none;break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}
- .item{break-inside:avoid}
-}
-@media (max-width:820px){body{grid-template-columns:1fr}aside{height:auto;position:static}}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,"Segoe UI",sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:36px 20px 60px}
+h1{font-size:34px;letter-spacing:-.02em;margin:0 0 6px}
+.sub{color:var(--mut);margin:0 0 22px}
+input[type=text]{width:100%;max-width:440px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);font:inherit}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 22px}
+.chip{border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:7px 13px;border-radius:99px;font:14px system-ui;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--acc);border-color:var(--acc);color:#fff}
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.tile{all:unset;box-sizing:border-box;cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:2px;transition:border-color .15s,transform .15s}
+.tile:hover,.tile:focus-visible{border-color:var(--acc);transform:translateY(-2px)}
+.tile b{font-size:16px}
+.tile span{font:12px ui-monospace,Consolas,monospace;color:var(--mut);letter-spacing:.08em}
+.empty{color:var(--mut);padding:30px 0}
+.back{all:unset;cursor:pointer;color:var(--acc);margin-bottom:18px;display:inline-block}
+.back:hover{text-decoration:underline}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
+.card h2{margin:0 0 4px;font-size:22px}
+.card p{margin:0 0 16px;color:var(--mut);font-size:14px}
+.btn{display:block;padding:12px 14px;margin-bottom:8px;border-radius:10px;border:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:15px}
+.btn.main{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn:hover{filter:brightness(1.07)}
+.btn small{display:block;opacity:.75;font-size:12px}
+.note{margin-top:26px;font-size:13px;color:var(--mut);max-width:70ch}
+[dir=rtl] .btn,[dir=rtl] .card{text-align:right}
 </style>
 </head>
 <body>
-<section id="home">
- <div class="hwrap">
-  <h1>Pilotenpass Generator</h1>
-  <p class="sub">Wähle das Land für den Pass. Choose the country for the passport.</p>
-  <input type="text" id="search" placeholder="Suchen / Search …" autocomplete="off">
-  <div id="grid"></div>
-  <p class="hint">Scherzartikel für die Pensionsfeier. Eigenes Design, keine Kopie echter Dokumente, kein gültiger Ausweis. Alles bleibt auf deinem Gerät.<br>Novelty item for a retirement party. Original design, not a copy of real documents, not a valid ID. Everything stays on your device.</p>
- </div>
-</section>
-<aside>
- <button type="button" id="backHome" style="background:var(--line);color:var(--ink);margin-bottom:12px">← Länder / Countries</button>
- <h1 id="t_title">Pilotenpass Generator</h1>
- <p class="hint" id="t_hint"></p>
-
- <fieldset><legend id="t_style"></legend>
-  <label id="t_country"></label><select id="country"></select>
-  <label id="t_lang"></label><select id="lang"></select>
-  <label style="display:flex;gap:8px;align-items:center;opacity:1;margin:10px 0 2px;font-size:13px;font-weight:600"><input type="checkbox" id="blank" style="width:auto"> <span id="t_blank">Leere Vorlage zum Selbstausfüllen / Blank template</span></label>
-  <label id="t_color"></label><select id="theme"></select>
-  <label id="t_land"></label><input type="text" id="land">
-  <label id="t_typ"></label><input type="text" id="typ">
-  <label id="t_sub"></label><input type="text" id="sub">
- </fieldset>
-
- <fieldset><legend id="t_person"></legend>
-  <div class="row">
-   <div><label id="t_surname"></label><input type="text" id="nn"></div>
-   <div><label id="t_given"></label><input type="text" id="vn"></div>
-  </div>
-  <label id="t_nick"></label><input type="text" id="nick">
-  <label id="t_rank"></label><input type="text" id="rang">
-  <div class="row">
-   <div><label id="t_birth"></label><input type="text" id="gb"></div>
-   <div><label id="t_nat"></label><input type="text" id="nat"></div>
-  </div>
-  <label id="t_hours"></label><input type="text" id="fh">
-  <label id="t_issued"></label><input type="text" id="ort">
-  <label id="t_valid"></label><input type="text" id="gueltig">
-  <label id="t_stamp"></label><input type="text" id="stempel">
-  <label id="t_photo"></label><input type="file" id="fotoMain" accept="image/*">
- </fieldset>
-
- <fieldset><legend id="t_quote"></legend>
-  <textarea id="zit"></textarea>
- </fieldset>
-
- <fieldset><legend><span id="t_visa1"></span></legend>
-  <input type="file" id="v1" accept="image/*"><label id="t_cap1"></label><input type="text" id="c1"></fieldset>
- <fieldset><legend><span id="t_visa2"></span></legend>
-  <input type="file" id="v2" accept="image/*"><label id="t_cap2"></label><input type="text" id="c2"></fieldset>
- <fieldset><legend><span id="t_visa3"></span></legend>
-  <input type="file" id="v3" accept="image/*"><label id="t_cap3"></label><input type="text" id="c3"></fieldset>
-
- <button id="t_print" onclick="window.print()"></button>
- <p class="hint" style="margin-top:8px" id="t_printhint"></p>
-</aside>
-<main id="out"></main>
-
-<script src="i18n.js"></script>
+<div class="wrap" id="app"></div>
 <script>
-const $=id=>document.getElementById(id);
-const imgs={};
+/* Sprache je Land: nur die wenigen Beschriftungen. Die Seiten dahinter (PRADO, Wikipedia, Commons) sind in der Regel englisch. */
+const T={
+de:{passport:'Reisepass',idcard:'Personalausweis',prado:'Offizielle Muster ansehen',pradoS:'PRADO, Register des Rates der EU',wiki:'Beschreibung und Bilder',wikiS:'Wikipedia',commons:'Fotos von Mustern',commonsS:'Wikimedia Commons',back:'← Alle Länder',note:'Diese Seite zeigt keine Dokumente selbst, sondern führt zu öffentlichen Quellen. Es sind Anschauungsmuster, keine Vorlagen zum Nachbauen.'},
+en:{passport:'Passport',idcard:'National ID card',prado:'View official specimens',pradoS:'PRADO, Council of the EU register',wiki:'Description and images',wikiS:'Wikipedia',commons:'Specimen photos',commonsS:'Wikimedia Commons',back:'← All countries',note:'This page does not show documents itself, it links to public sources. These are for reference, not templates to copy.'},
+fr:{passport:'Passeport',idcard:'Carte d\'identité',prado:'Voir les spécimens officiels',pradoS:'PRADO, registre du Conseil de l\'UE',wiki:'Description et images',wikiS:'Wikipédia',commons:'Photos de spécimens',commonsS:'Wikimedia Commons',back:'← Tous les pays',note:'Cette page n\'affiche aucun document, elle renvoie vers des sources publiques. Ce sont des exemples à consulter, pas des modèles à copier.'},
+es:{passport:'Pasaporte',idcard:'Documento de identidad',prado:'Ver especímenes oficiales',pradoS:'PRADO, registro del Consejo de la UE',wiki:'Descripción e imágenes',wikiS:'Wikipedia',commons:'Fotos de especímenes',commonsS:'Wikimedia Commons',back:'← Todos los países',note:'Esta página no muestra documentos, enlaza a fuentes públicas. Son ejemplos para consultar, no plantillas para copiar.'},
+it:{passport:'Passaporto',idcard:'Carta d\'identità',prado:'Vedi i campioni ufficiali',pradoS:'PRADO, registro del Consiglio UE',wiki:'Descrizione e immagini',wikiS:'Wikipedia',commons:'Foto di campioni',commonsS:'Wikimedia Commons',back:'← Tutti i paesi',note:'Questa pagina non mostra documenti, rimanda a fonti pubbliche. Sono esempi da consultare, non modelli da copiare.'},
+pt:{passport:'Passaporte',idcard:'Cartão de identificação',prado:'Ver espécimes oficiais',pradoS:'PRADO, registo do Conselho da UE',wiki:'Descrição e imagens',wikiS:'Wikipédia',commons:'Fotos de espécimes',commonsS:'Wikimedia Commons',back:'← Todos os países',note:'Esta página não mostra documentos, remete para fontes públicas. São exemplos para consulta, não modelos para copiar.'},
+tr:{passport:'Pasaport',idcard:'Kimlik kartı',prado:'Resmi örnekleri gör',pradoS:'PRADO, AB Konseyi kaydı',wiki:'Açıklama ve görseller',wikiS:'Vikipedi',commons:'Örnek fotoğrafları',commonsS:'Wikimedia Commons',back:'← Tüm ülkeler',note:'Bu sayfa belge göstermez, herkese açık kaynaklara yönlendirir. Başvuru içindir, kopyalanacak şablon değildir.'},
+ru:{passport:'Паспорт',idcard:'Удостоверение личности',prado:'Официальные образцы',pradoS:'PRADO, реестр Совета ЕС',wiki:'Описание и изображения',wikiS:'Википедия',commons:'Фото образцов',commonsS:'Wikimedia Commons',back:'← Все страны',note:'Эта страница сама не показывает документы, а ведёт к открытым источникам. Это справочный материал, а не шаблоны для копирования.'},
+pl:{passport:'Paszport',idcard:'Dowód osobisty',prado:'Zobacz oficjalne wzory',pradoS:'PRADO, rejestr Rady UE',wiki:'Opis i obrazy',wikiS:'Wikipedia',commons:'Zdjęcia wzorów',commonsS:'Wikimedia Commons',back:'← Wszystkie kraje',note:'Ta strona nie pokazuje dokumentów, prowadzi do publicznych źródeł. To materiał poglądowy, nie szablony do kopiowania.'},
+nl:{passport:'Paspoort',idcard:'Identiteitskaart',prado:'Officiële specimens bekijken',pradoS:'PRADO, register van de Raad van de EU',wiki:'Beschrijving en afbeeldingen',wikiS:'Wikipedia',commons:'Foto\'s van specimens',commonsS:'Wikimedia Commons',back:'← Alle landen',note:'Deze pagina toont zelf geen documenten, maar verwijst naar openbare bronnen. Ter illustratie, geen sjablonen om na te maken.'},
+hr:{passport:'Putovnica',idcard:'Osobna iskaznica',prado:'Pogledaj službene uzorke',pradoS:'PRADO, registar Vijeća EU',wiki:'Opis i slike',wikiS:'Wikipedija',commons:'Fotografije uzoraka',commonsS:'Wikimedia Commons',back:'← Sve zemlje',note:'Ova stranica sama ne prikazuje isprave, već vodi na javne izvore. Služi kao informacija, a ne kao predložak za kopiranje.'},
+el:{passport:'Διαβατήριο',idcard:'Ταυτότητα',prado:'Επίσημα δείγματα',pradoS:'PRADO, μητρώο του Συμβουλίου της ΕΕ',wiki:'Περιγραφή και εικόνες',wikiS:'Βικιπαίδεια',commons:'Φωτογραφίες δειγμάτων',commonsS:'Wikimedia Commons',back:'← Όλες οι χώρες',note:'Η σελίδα δεν δείχνει η ίδια έγγραφα, παραπέμπει σε δημόσιες πηγές. Είναι για ενημέρωση, όχι πρότυπα προς αντιγραφή.'},
+sv:{passport:'Pass',idcard:'ID-kort',prado:'Se officiella exemplar',pradoS:'PRADO, EU-rådets register',wiki:'Beskrivning och bilder',wikiS:'Wikipedia',commons:'Foton av exemplar',commonsS:'Wikimedia Commons',back:'← Alla länder',note:'Sidan visar inga handlingar själv utan länkar till offentliga källor. Det är informationsmaterial, inte mallar att kopiera.'},
+ar:{passport:'جواز السفر',idcard:'بطاقة الهوية',prado:'عرض النماذج الرسمية',pradoS:'PRADO، سجل مجلس الاتحاد الأوروبي',wiki:'الوصف والصور',wikiS:'ويكيبيديا',commons:'صور النماذج',commonsS:'ويكيميديا كومنز',back:'→ كل الدول',note:'لا تعرض هذه الصفحة وثائق بنفسها، بل تحيل إلى مصادر عامة. هي للاطلاع وليست قوالب للنسخ.'}
+};
+/* Alle Länder: ISO3:ISO2:Region. Region: EU Europa, NA Nordamerika, AS Asien, NAF Nordafrika/Naher Osten, SA Lateinamerika, AF Afrika, OC Ozeanien.
+   PRADO (Register des Rates der EU) hat für jedes dieser Länder eine Seite, außer Indonesien (geprüft am 22.11.2026). */
+const NOPRADO=new Set(['IDN']);
+const TAB='AFG:AF:AS AGO:AO:AF ALB:AL:EU AND:AD:EU ARE:AE:NAF ARG:AR:SA ARM:AM:AS AUS:AU:OC AUT:AT:EU AZE:AZ:AS BDI:BI:AF BEL:BE:EU BEN:BJ:AF BFA:BF:AF BGD:BD:AS BGR:BG:EU BHR:BH:NAF BHS:BS:SA BIH:BA:EU BLR:BY:EU BLZ:BZ:SA BRA:BR:SA BRN:BN:AS BTN:BT:AS BWA:BW:AF CAF:CF:AF CAN:CA:NA CHE:CH:EU CHL:CL:SA CHN:CN:AS CIV:CI:AF CMR:CM:AF COD:CD:AF COG:CG:AF COL:CO:SA COM:KM:AF CPV:CV:AF CRI:CR:SA CUB:CU:SA CYP:CY:EU CZE:CZ:EU DEU:DE:EU DJI:DJ:AF DMA:DM:SA DNK:DK:EU DOM:DO:SA DZA:DZ:NAF ECU:EC:SA EGY:EG:NAF ERI:ER:AF ESP:ES:EU EST:EE:EU ETH:ET:AF FIN:FI:EU FRA:FR:EU GAB:GA:AF GBR:GB:EU GEO:GE:AS GHA:GH:AF GIN:GN:AF GMB:GM:AF GNB:GW:AF GNQ:GQ:AF GRC:GR:EU GRD:GD:SA GUY:GY:SA HND:HN:SA HRV:HR:EU HTI:HT:SA HUN:HU:EU IDN:ID:AS IND:IN:AS IRL:IE:EU IRN:IR:NAF IRQ:IQ:NAF ISL:IS:EU ISR:IL:NAF ITA:IT:EU JAM:JM:SA JOR:JO:NAF JPN:JP:AS KAZ:KZ:AS KEN:KE:AF KGZ:KG:AS KHM:KH:AS KNA:KN:SA KOR:KR:AS KWT:KW:NAF LAO:LA:AS LBN:LB:NAF LBR:LR:AF LBY:LY:NAF LIE:LI:EU LKA:LK:AS LSO:LS:AF LTU:LT:EU LUX:LU:EU LVA:LV:EU MAR:MA:NAF MCO:MC:EU MDA:MD:EU MDG:MG:AF MDV:MV:AS MEX:MX:NA MKD:MK:EU MLI:ML:AF MLT:MT:EU MNE:ME:EU MNG:MN:AS MOZ:MZ:AF MRT:MR:NAF MWI:MW:AF MYS:MY:AS NAM:NA:AF NGA:NG:AF NIC:NI:SA NLD:NL:EU NOR:NO:EU NPL:NP:AS NZL:NZ:OC OMN:OM:NAF PAK:PK:AS PAN:PA:SA PER:PE:SA PHL:PH:AS PLW:PW:OC POL:PL:EU PRK:KP:AS PRT:PT:EU PRY:PY:SA QAT:QA:NAF ROU:RO:EU RUS:RU:EU RWA:RW:AF SAU:SA:NAF SDN:SD:NAF SEN:SN:AF SGP:SG:AS SLE:SL:AF SLV:SV:SA SMR:SM:EU SOM:SO:AF SRB:RS:EU SSD:SS:AF STP:ST:AF SUR:SR:SA SVK:SK:EU SVN:SI:EU SWE:SE:EU SYC:SC:AF SYR:SY:NAF TCD:TD:AF TGO:TG:AF THA:TH:AS TKM:TM:AS TLS:TL:AS TUN:TN:NAF TUR:TR:EU TUV:TV:OC TWN:TW:AS TZA:TZ:AF UGA:UG:AF UKR:UA:EU URY:UY:SA USA:US:NA UZB:UZ:AS VAT:VA:EU VEN:VE:SA VNM:VN:AS YEM:YE:NAF ZAF:ZA:AF ZMB:ZM:AF ZWE:ZW:AF';
+const LANG={de:'AT DE CH LI',fr:'FR BE',nl:'NL',it:'IT SM VA',es:'ES MX AR CL CO PE VE UY EC CR CU DO GT HN NI PA PY SV BO',pt:'PT BR',tr:'TR',ru:'RU',pl:'PL',hr:'HR BA',el:'GR CY',sv:'SE',ar:'MA DZ TN LY EG AE SA LB JO IQ KW QA BH OM YE SY SD MR'};
+const L2={};for(const k in LANG)LANG[k].split(' ').forEach(i=>L2[i]=k);
+const dn=l=>{try{return new Intl.DisplayNames([l],{type:'region'})}catch(e){return {of:x=>x}}};
+const DN={de:dn('de'),en:dn('en')};
+/* [Code, Name im Land, englischer Name, Region, Sprache, deutscher Name] */
+const C=TAB.split(' ').map(x=>{const [c3,c2,r]=x.split(':');const lang=L2[c2]||'en';DN[lang]=DN[lang]||dn(lang);
+  return [c3,DN[lang].of(c2)||c2,DN.en.of(c2)||c2,r,lang,DN.de.of(c2)||c2]}).sort((a,b)=>a[5].localeCompare(b[5],'de'));
+const REG=[['ALL','Alle / All'],['EU','Europa'],['NA','Nordamerika / North America'],['AS','Asien / Asia'],['NAF','Nordafrika, Naher Osten / N. Africa, Middle East'],['SA','Lateinamerika / Latin America'],['AF','Afrika / Africa'],['OC','Ozeanien / Oceania']];
+let region='ALL',q='';
+const app=document.getElementById('app');
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const fields=['land','typ','sub','nn','vn','nick','rang','gb','nat','fh','ort','gueltig','stempel','zit','c1','c2','c3'];
-const defKeys={typ:'d_typ',sub:'d_sub',rang:'d_rank',nat:'d_nat',fh:'d_hours',ort:'d_issued',gueltig:'d_valid',stempel:'d_stamp',zit:'d_quote',c1:'d_c1',c2:'d_c2',c3:'d_c3'};
-let L=I18N.de;
+const wiki=(n,w)=>`https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(n+' '+w)}`;
+const commons=(n,w)=>`https://commons.wikimedia.org/w/index.php?search=${encodeURIComponent(n+' '+w)}&ns6=1`;
 
-function guilloche(color,seed){
-  let p='';const W=125,H=176;
-  for(let i=0;i<26;i++){
-    const ph=i*.24+seed,A=7+i*.3;let d='';
-    for(let x=0;x<=W;x+=2.5){const y=H*.5+Math.sin(x*.09+ph)*A+Math.sin(x*.043-ph*1.7)*(A*.7)+(i-13)*4.2;d+=(x?'L':'M')+x.toFixed(1)+' '+y.toFixed(1)}
-    p+=`<path d="${d}"/>`;
-  }
-  return `<svg class="gui" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" fill="none" stroke="${color}" stroke-width=".18" opacity=".32">${p}</svg>`;
+function home(){
+  document.title='Ausweis-Atlas';document.documentElement.lang='de';document.documentElement.dir='ltr';
+  const list=C.filter(c=>(region==='ALL'||c[3]===region)&&(!q||(c[1]+' '+c[2]+' '+c[5]+' '+c[0]).toLowerCase().includes(q)));
+  app.innerHTML=`<h1>Ausweis-Atlas</h1>
+   <p class="sub">Wie sehen Reisepass und Personalausweis eines Landes aus? Land wählen. / Pick a country to see what its passport and ID card look like.</p>
+   <input type="text" id="s" placeholder="Suchen / Search …" value="${esc(q)}" autocomplete="off">
+   <div class="chips">${REG.map(r=>`<button class="chip" data-r="${r[0]}" aria-pressed="${r[0]===region}">${esc(r[1])}</button>`).join('')}</div>
+   <div id="grid">${list.map(c=>`<button class="tile" data-c="${c[0]}"><b>${esc(c[5])}</b><span>${c[0]}</span></button>`).join('')||'<p class="empty">–</p>'}</div>
+   <p class="note">Nachschlageseite zu öffentlichen Quellen. Keine Dokumente werden hier gespeichert oder nachgebaut.<br>Reference page linking to public sources. No documents are stored or recreated here.</p>`;
+  const s=document.getElementById('s');
+  s.addEventListener('input',e=>{q=e.target.value.toLowerCase();const p=e.target.selectionStart;home();const n=document.getElementById('s');n.focus();n.setSelectionRange(p,p)});
 }
-function rosette(color){
-  let p='';
-  for(let k=0;k<36;k++){p+=`<ellipse cx="50" cy="50" rx="38" ry="9" transform="rotate(${k*5} 50 50)"/>`}
-  return `<svg class="gui" viewBox="0 0 125 54" preserveAspectRatio="xMidYMid slice" fill="none" stroke="${color}" stroke-width=".25" opacity=".22"><g transform="translate(35 -6) scale(1.1)">${p}</g></svg>`;
+function detail(code){
+  const c=C.find(x=>x[0]===code);if(!c){location.hash='';return}
+  const t=T[c[4]];const rtl=c[4]==='ar';
+  document.title=c[1]+' · Ausweis-Atlas';document.documentElement.lang=c[4];document.documentElement.dir=rtl?'rtl':'ltr';
+  const card=(title,what)=>`<section class="card"><h2>${esc(title)}</h2><p>${esc(c[1])}</p>
+   ${!NOPRADO.has(code)?`<a class="btn main" target="_blank" rel="noopener noreferrer" href="https://www.consilium.europa.eu/prado/en/prado-documents/${code}/index.html">${esc(t.prado)}<small>${esc(t.pradoS)}</small></a>`:''}
+   <a class="btn" target="_blank" rel="noopener noreferrer" href="${wiki(c[2],what)}">${esc(t.wiki)}<small>${esc(t.wikiS)}</small></a>
+   <a class="btn" target="_blank" rel="noopener noreferrer" href="${commons(c[2],what)}">${esc(t.commons)}<small>${esc(t.commonsS)}</small></a></section>`;
+  app.innerHTML=`<button class="back" id="b">${esc(t.back)}</button><h1>${esc(c[1])}</h1><p class="sub">${c[0]} · ${esc(c[2])}</p>
+   <div class="cards">${card(t.passport,'passport')}${card(t.idcard,'national identity card')}</div><p class="note">${esc(t.note)}</p>`;
+  document.getElementById('b').addEventListener('click',()=>{location.hash=''});
 }
-function plane(c){
-  let rays='';for(let k=0;k<48;k++){const a=k*7.5*Math.PI/180;rays+=`<line x1="${50+43*Math.cos(a)}" y1="${50+43*Math.sin(a)}" x2="${50+46*Math.cos(a)}" y2="${50+46*Math.sin(a)}"/>`}
-  return `<svg class="emblem foil-svg" viewBox="0 0 100 100" fill="none"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff8dc"/><stop offset=".45" stop-color="${c}"/><stop offset="1" stop-color="${c}" stop-opacity=".6"/></linearGradient></defs>
-  <g stroke="url(#g)" fill="url(#g)"><circle cx="50" cy="50" r="47" stroke-width="1.4" fill="none"/><circle cx="50" cy="50" r="42" stroke-width=".7" fill="none"/><g stroke-width=".7">${rays}</g>
-  <path stroke="none" d="M50 17c2 0 3.5 3 3.5 7v15l27 17v6l-27-7.5v14l7 5.5v4.5L50 70.500 39.500 78v-4.500l7-5.500V54l-27 7.500v-6L46.500 39V24c0-4 1.500-7 3.500-7z"/>
-  <path fill="none" stroke-width="1.2" d="M22 82c10 6 20 8 28 8s18-2 28-8"/><path fill="none" stroke-width="1.2" d="M26 86c8 5 16 7 24 7s16-2 24-7"/></g></svg>`;
-}
-function photo(key,cls,label){const u=imgs[key];const b=$('blank')&&$('blank').checked;return `<div class="${cls}" style="${u?`background-image:url(${u})`:''}">${u||b?'':esc(label)}</div>`}
-function mrzify(s){return s.toUpperCase().replace(/Ä/g,'AE').replace(/Ö/g,'OE').replace(/Ü/g,'UE').replace(/ß/g,'SS').replace(/[^A-Z0-9]+/g,'<')}
-function pad(s){return s.padEnd(44,'<').slice(0,44)}
-
-function render(){
-  const [c1,c2]=$('theme').value.split('|');
-  document.documentElement.style.setProperty('--c1',c1);document.documentElement.style.setProperty('--c2',c2);
-  const v=Object.fromEntries(fields.map(i=>[i,esc($(i).value)]));
-  const blank=$('blank').checked;
-  if(blank)['nn','vn','nick','rang','gb','nat','fh','ort','gueltig','stempel','zit','c1','c2','c3'].forEach(k=>v[k]='');
-  const dir=L.rtl?'rtl':'ltr';
-  const fake=`<div class="fake">${esc(L.fake)}</div>`;
-  const wmTxt=(esc(L.wm)+' &nbsp;&nbsp;&nbsp; ').repeat(8);
-  const wm=`<div class="wm">${Array(9).fill(`<span>${wmTxt}</span>`).join('')}</div>`;
-  const micro=`<div class="micro">${(esc($('land').value)+' · '+esc($('typ').value)+' · ').repeat(14)}</div>`;
-  const mrz1=blank?pad(''):pad('P<'+mrzify($('land').value).slice(0,3)+mrzify($('nn').value)+'<<'+mrzify($('vn').value));
-  const mrz2=blank?pad(''):pad('SCHERZ<ARTIKEL<'+mrzify($('nick').value)+'<<NO<REAL<ID');
-  const vis=n=>`<div class="item"><div class="page inner visa" dir="${dir}">${guilloche(c1,n*1.3)}${wm}<h3><span>${esc(L.visa)}</span><span>${n}</span></h3>${photo('v'+n,'vp',L.photo+' '+n)}<div class="cp">${v['c'+n]}</div>${micro}${fake}</div><span class="cap">${esc(L.visa)} ${n}</span></div>`;
-  const sigName=blank?'':esc($('vn').value.charAt(0)+'. '+$('nn').value);
-  $('out').classList.toggle('blank',blank);
-  $('out').innerHTML=`
-  <div class="item"><div class="page cover" dir="${dir}"><div class="land foil">${v.land}</div>${plane(c2)}<div><div class="typ foil">${v.typ}</div><div class="sub foil">${v.sub}</div></div>${fake}</div><span class="cap">Cover</span></div>
-  <div class="item"><div class="page inner wide" dir="${dir}">${guilloche(c1,0)}${wm}<span class="holo"></span>
-    <h3><span>${v.typ}</span><span>${v.land}</span></h3>
-    <div class="wdata">
-     <div class="wl">${photo('fotoMain','photo',L.photo)}<div class="sig"><i>${sigName}</i><span>${esc(L.sig)}</span></div></div>
-     <div class="wr">
-      <div class="f"><small>${esc(L.surname)}</small><b>${v.nn}</b></div>
-      <div class="f"><small>${esc(L.given)}</small><b>${v.vn}</b></div>
-      <div class="f"><small>${esc(L.nick)}</small><b>${v.nick}</b></div>
-      <div class="f"><small>${esc(L.rank)}</small><b>${v.rang}</b></div>
-      <div class="f"><small>${esc(L.birth)}</small><b>${v.gb}</b></div>
-      <div class="f"><small>${esc(L.nat)}</small><b>${v.nat}</b></div>
-      <div class="f"><small>${esc(L.issued)}</small><b>${v.ort}</b></div>
-      <div class="f"><small>${esc(L.valid)}</small><b>${v.gueltig}</b></div>
-      <div class="f span2"><small>${esc(L.hours)}</small><b>${v.fh}</b></div>
-      <div class="quote span2">${v.zit}</div>
-     </div></div>
-    <div class="mrz" style="margin-top:auto">${esc(mrz1)}<br>${esc(mrz2)}</div>
-    ${micro}
-    ${imgs.fotoMain?`<div class="ghost" style="background-image:url(${imgs.fotoMain})"></div>`:''}
-    ${blank?'':`<div class="stamp">${v.stempel}</div>`}${fake}</div><span class="cap">${esc(L.page_data)}</span></div>
-  ${vis(1)}${vis(2)}${vis(3)}
-  <div class="item"><div class="page cover back" dir="${dir}">${plane(c2)}${fake}</div><span class="cap">${esc(L.page_back||'Rückseite / Back')}</span></div>
-  <div class="item"><div class="card" dir="${dir}">${rosette(c1)}<div class="bar"><span>${v.land}</span><span>${v.typ}</span></div>
-    <div class="body">${photo('fotoMain','photo',L.photo)}
-     <div><div class="f"><small>${esc(L.surname)} / ${esc(L.given)}</small><b>${v.nn}, ${v.vn}</b></div>
-     <div class="f"><small>${esc(L.rank)}</small><b>${v.rang}</b></div>
-     <div class="f"><small>${esc(L.birth)}</small><b>${v.gb}</b></div>
-     <div class="f"><small>${esc(L.valid)}</small><b>${v.gueltig}</b></div></div></div>
-    <span class="holo"></span><div class="q">${v.zit}</div>${fake}</div><span class="cap">${esc(L.page_card)}</span></div>`;
-}
-
-/* Sprache und Land */
-function applyUI(){
-  const set=(id,k)=>{const e=$(id);if(e)e.textContent=L[k]};
-  [['t_title','ui_title'],['t_hint','ui_hint'],['t_style','ui_style'],['t_country','ui_country'],['t_lang','ui_lang'],['t_color','ui_color'],
-   ['t_land','ui_land'],['t_typ','ui_typ'],['t_sub','ui_sub'],['t_person','ui_person'],['t_surname','surname'],['t_given','given'],['t_nick','nick'],
-   ['t_rank','rank'],['t_birth','birth'],['t_nat','nat'],['t_hours','hours'],['t_issued','issued'],['t_valid','valid'],['t_stamp','ui_stamp'],
-   ['t_photo','ui_photo'],['t_quote','ui_quote'],['t_print','ui_print'],['t_printhint','ui_printhint']].forEach(a=>set(...a));
-  [1,2,3].forEach(n=>{$('t_visa'+n).textContent=L.visa+' '+n;$('t_cap'+n).textContent=L.ui_caption});
-  document.documentElement.lang=L.code;document.querySelector('aside').dir=L.rtl?'rtl':'ltr';
-  // Farbnamen
-  const keep=$('theme').value;$('theme').innerHTML=THEMES.map((t,i)=>`<option value="${t.v}">${esc(L.colors[i])}</option>`).join('');$('theme').value=keep;
-}
-function fillDefaults(){
-  for(const f in defKeys)$(f).value=L[defKeys[f]];
-}
-function setCountry(){
-  const c=COUNTRIES[$('country').value];
-  $('land').value=c.name;
-  if(c.lang){$('lang').value=c.lang;L=I18N[c.lang];applyUI();fillDefaults();$('land').value=c.name}
-  if(c.v)$('theme').value=c.v;
-  render();
-}
-function init(){
-  $('country').innerHTML=COUNTRIES.map((c,i)=>`<option value="${i}">${esc(c.name)}</option>`).join('');
-  $('lang').innerHTML=Object.keys(I18N).map(k=>`<option value="${k}">${esc(I18N[k].langName)}</option>`).join('');
-  $('theme').innerHTML=THEMES.map((t,i)=>`<option value="${t.v}">${i}</option>`).join('');
-  $('lang').value='de';L=I18N.de;applyUI();fillDefaults();
-  $('nn').value='Mustermann';$('vn').value='Max';$('nick').value='Captain Schnarch';$('gb').value='01.01.1961';
-  $('country').value=0;$('land').value=COUNTRIES[0].name;$('theme').value=COUNTRIES[0].v;
-  render();
-}
-$('country').addEventListener('change',setCountry);
-$('lang').addEventListener('change',()=>{L=I18N[$('lang').value];applyUI();fillDefaults();render()});
-$('theme').addEventListener('change',render);
-$('blank').addEventListener('change',render);
-fields.forEach(i=>$(i).addEventListener('input',render));
-['fotoMain','v1','v2','v3'].forEach(id=>$(id).addEventListener('change',e=>{
-  const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{imgs[id]=r.result;render()};r.readAsDataURL(f);
-}));
-function buildGrid(q){
-  q=(q||'').toLowerCase();
-  $('grid').innerHTML=COUNTRIES.map((c,i)=>({c,i})).filter(o=>!q||o.c.name.toLowerCase().includes(q)).map(o=>{
-    const [a,b]=(o.c.v||THEMES[3].v).split('|');
-    return `<button class="tile" style="--a:${a};--b:${b}" data-i="${o.i}"><b>${esc(o.c.name)}</b><i>${o.c.lang?esc(I18N[o.c.lang].langName):'free'}</i></button>`;
-  }).join('');
-}
-$('grid').addEventListener('click',e=>{
-  const t=e.target.closest('.tile');if(!t)return;
-  $('country').value=t.dataset.i;setCountry();
-  document.body.classList.remove('home');window.scrollTo(0,0);
+function route(){const h=location.hash.replace('#','');h?detail(h):home();window.scrollTo(0,0)}
+app.addEventListener('click',e=>{
+  const t=e.target.closest('.tile');if(t){location.hash=t.dataset.c;return}
+  const r=e.target.closest('.chip');if(r){region=r.dataset.r;home()}
 });
-$('search').addEventListener('input',e=>buildGrid(e.target.value));
-$('backHome').addEventListener('click',()=>{document.body.classList.add('home');window.scrollTo(0,0)});
-document.body.classList.add('home');
-buildGrid('');
-init();
+window.addEventListener('hashchange',route);route();
 </script>
 </body>
 </html>
