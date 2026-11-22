@@ -1,6 +1,6 @@
 /* Service Worker: speichert die App-Huelle und die Daten fuer den Offline-Start.
    Bilder von PRADO und Flaggen kommen weiter aus dem Netz. */
-const V = 'atlas-v1';
+const V = 'atlas-v2';
 const SHELL = ['./', 'index.html', 'data.json', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => {

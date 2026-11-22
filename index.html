@@ -50,14 +50,14 @@ input:focus-visible{border-color:var(--acc)}
 .tabs{display:flex;gap:8px;margin:22px 0 18px;flex-wrap:wrap}
 .tab{border:1px solid var(--line);background:var(--glass);color:var(--ink);padding:10px 18px;border-radius:12px;font:600 15px system-ui;cursor:pointer}
 .tab[aria-selected=true]{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
-.doc{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.doc{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:26px 28px;margin-bottom:22px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
 .doc h3{margin:0 0 2px;font-size:19px;letter-spacing:-.01em}
 .doc .ttl{color:var(--mut);font-size:13px;margin-bottom:14px;word-break:break-word}
 .badge{display:inline-block;font:600 11px system-ui;padding:3px 9px;border-radius:99px;margin-inline-start:8px;vertical-align:middle;letter-spacing:.04em;text-transform:uppercase}
 .badge.ok{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}.badge.no{background:color-mix(in srgb,var(--no) 16%,transparent);color:var(--no)}.badge.t{background:var(--glass);color:var(--mut)}
-.imgs{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.imgs{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:18px}
 figure{margin:0;display:flex;flex-direction:column;gap:6px;align-items:center}
-figure img{height:260px;width:auto;max-width:100%;border-radius:8px;background:var(--glass);border:1px solid var(--line);cursor:zoom-in;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+figure img{height:380px;width:auto;max-width:100%;border-radius:8px;background:var(--glass);border:1px solid var(--line);cursor:zoom-in;box-shadow:0 6px 18px rgba(0,0,0,.3)}
 figcaption{font-size:12px;color:var(--mut)}
 .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px 18px;margin:0 0 14px}
 .facts div small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut)}
@@ -75,9 +75,12 @@ figcaption{font-size:12px;color:var(--mut)}
 .gate h1{font-size:34px}
 .gate input{text-align:center;font-size:30px;letter-spacing:.5em;padding:14px 10px 14px 24px;max-width:240px}
 .gate p{color:var(--mut);font-size:14px;min-height:1.4em}
-.shell{position:relative;z-index:1;max-width:1560px;margin:0 auto;display:grid;grid-template-columns:230px minmax(0,1fr) 310px;gap:10px;align-items:start}
-.shell .wrap{max-width:none;margin:0;padding-inline:14px}
-.rail{position:sticky;top:0;max-height:100vh;overflow:auto;padding:46px 10px 30px;font-size:14px}
+.shell{position:relative;z-index:1;max-width:2400px;margin:0 auto;display:grid;grid-template-columns:330px minmax(0,1fr);gap:24px;align-items:start}
+.shell .wrap{max-width:none;margin:0;padding:44px 40px 80px 12px}
+.rail{position:sticky;top:0;max-height:100vh;overflow:auto;padding:44px 6px 30px 24px;font-size:14px;background:linear-gradient(90deg,var(--glass),transparent)}
+.rtabs{display:flex;gap:6px;margin:0 0 14px}
+.rtabs button{flex:1;border:1px solid var(--line);background:var(--glass);color:var(--ink);padding:9px 10px;border-radius:10px;font:600 13px system-ui;cursor:pointer}
+.rtabs button[aria-selected=true]{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
 .rail h4{margin:0 0 10px;font:600 12px system-ui;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
 .rail .empty{padding:6px 0;font-size:13px}
 .rc{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;color:var(--ink);text-decoration:none;cursor:pointer;border:1px solid transparent}
@@ -101,13 +104,25 @@ figcaption{font-size:12px;color:var(--mut)}
 .doc.hl{outline:2px solid var(--acc);outline-offset:3px}
 @media (max-width:1240px){
  .shell{grid-template-columns:minmax(0,1fr)}
- .rail.left{display:none}
- .rail.right{position:fixed;right:0;top:0;bottom:0;width:min(340px,92vw);max-height:none;background:var(--bg2);border-inline-start:1px solid var(--line);z-index:44;transform:translateX(105%);transition:transform .22s}
- .rail.right.open{transform:none}
- .fab{display:block}
+ .shell .wrap{padding:44px 20px 80px}
+ .rail{position:fixed;left:0;top:0;bottom:0;width:min(350px,92vw);max-height:none;background:var(--bg2);border-inline-end:1px solid var(--line);z-index:44;transform:translateX(-105%);transition:transform .22s;padding-left:20px}
+ .rail.open{transform:none}
+ .fab{display:block;left:14px;right:auto}
 }
-@media print{.orb,.wrap,.rail.left,.fab,#lb{display:none!important}.shell{display:block}.rail.right{position:static;transform:none;width:auto;max-height:none;background:none}.rtools{display:none}body{background:#fff;color:#000}.mk{border-color:#999;break-inside:avoid}}
-@media (max-width:600px){figure img{height:200px}}
+@media print{.orb,.wrap,.fab,#lb,.rtabs{display:none!important}.shell{display:block}.rail{position:static;transform:none;width:auto;max-height:none;background:none;padding:0}.rtools{display:none}body{background:#fff;color:#000}.mk{border-color:#999;break-inside:avoid}}
+.grp{margin-bottom:34px}
+.grp>h2{font-size:22px;letter-spacing:-.01em;margin:6px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.exp{background:var(--glass);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:0 0 18px;font-size:15px;line-height:1.6;max-width:90ch}
+.exp b.lbl{display:block;font:600 11px system-ui;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-bottom:4px}
+.exp p{margin:0 0 6px}.exp p:last-child{margin:0}
+.exp .df{color:var(--ink);border-top:1px dashed var(--line);padding-top:8px;margin-top:8px}
+.sum{font-size:16px;line-height:1.6;max-width:90ch;margin:0 0 14px;color:var(--ink)}
+details.why{border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin:0 0 24px;background:var(--glass);max-width:90ch}
+details.why summary{cursor:pointer;font-weight:600}
+details.why p{margin:10px 0 0;line-height:1.6;color:var(--mut)}
+details.why p b{color:var(--ink)}
+.mdl{font:600 11px system-ui;color:var(--mut);margin-inline-start:8px}
+@media (max-width:600px){figure img{height:240px}.doc{padding:18px}}
 </style>
 </head>
 <body>
@@ -227,7 +242,6 @@ function home(){
   app.innerHTML=`<div class="wrap"><h1>Der <em>Ausweis</em>-Atlas</h1>
    <p class="sub">Reisepässe und Personalausweise der Welt, mit Vorderseite, Rückseite und Daten. Land wählen. / Passports and ID cards of the world. Pick a country.</p>
    <div class="stats"><div><b>${C.length}</b>Länder / Countries</div><div><b>${total||'…'}</b>Dokumente / Documents</div><div><b>${Object.keys(T).length}</b>Sprachen / Languages</div></div>
-   ${installHTML()}
    <input type="text" id="s" placeholder="Suchen / Search …" value="${esc(q)}" autocomplete="off">
    <div class="chips">${REG.map(r=>`<button class="chip" data-r="${r[0]}" aria-pressed="${r[0]===region}">${esc(r[1])}</button>`).join('')}</div>
    <div id="grid">${list.map(c=>`<button class="tile" data-c="${c[0]}" style="background-image:url(${flag(c[6])})"><b>${esc(c[5])}</b><span>${c[0]}</span></button>`).join('')||'<p class="empty">–</p>'}</div>
@@ -237,35 +251,91 @@ function home(){
   rails();
 }
 
-function docCard(d,t){
+let LAattr='';
+const TYPORD=['O','P','S','D','F','Y'];
+const TYPNAME={A:{O:'Normale Reisepässe',P:'Vorläufige Pässe (Notpässe)',S:'Dienstpässe',D:'Diplomatenpässe',F:'Sonderausweise',Y:'Sonderfälle und Zusatzdokumente'},B:{O:'Normale Personalausweise',P:'Vorläufige Personalausweise',S:'Dienstausweise',D:'Diplomatenausweise',F:'Sonderausweise (zum Beispiel für Soldaten)',Y:'Sonderfälle und Zusatzdokumente'}};
+const TYPSING={A:{O:'normaler Reisepass',P:'vorläufiger Pass',S:'Dienstpass',D:'Diplomatenpass',F:'Sonderausweis',Y:'Sonderfall'},B:{O:'normaler Personalausweis',P:'vorläufiger Ausweis',S:'Dienstausweis',D:'Diplomatenausweis',F:'Sonderausweis',Y:'Sonderfall'}};
+const TYPTXT={
+ A:{O:'Der normale Pass für Bürgerinnen und Bürger. Damit reisen die meisten Menschen.',
+    P:'Ein Notpass: nur kurz gültig und schnell ausgestellt, wenn jemand dringend einen Pass braucht, zum Beispiel nach einem Verlust im Ausland.',
+    S:'Ein Dienstpass (auch Amts- oder Sonderpass): für Beamte und Staatsbedienstete auf Dienstreisen. Für private Reisen ist er nicht gedacht.',
+    D:'Ein Diplomatenpass: nur für Diplomaten und hohe Regierungsvertreter im Dienst. Normale Bürger bekommen ihn nicht.',
+    F:'Ein Sonderausweis für eine bestimmte Gruppe, zum Beispiel Soldaten. Kein normaler Pass.',
+    Y:'Ein Sonderfall, der kein normaler Pass ist, zum Beispiel ein Sammelpass für Gruppen oder ein Klebeetikett für Eintragungen.'},
+ B:{O:'Der normale Personalausweis für Bürgerinnen und Bürger im Alltag.',
+    P:'Ein vorläufiger Ausweis: zeitlich begrenzt, als Ersatz, bis der richtige Ausweis fertig ist.',
+    S:'Ein Dienstausweis für Staatsbedienstete.',
+    D:'Ein Ausweis für Diplomaten.',
+    F:'Ein Sonderausweis für eine bestimmte Gruppe, zum Beispiel Soldaten im aktiven Dienst.',
+    Y:'Ein Sonderfall, kein normaler Ausweis, zum Beispiel ein Begleitblatt.'}};
+const fmtD=s=>{const m=(s||'').match(/(\d{2})\/(\d{2})\/(\d{4})/);return m?m[1]+'.'+m[2]+'.'+m[3]:''};
+function typeOf(d){return (d[0].split('-')[1]||'XO')[1]||'O'}
+function explain(d,grp,i){
+  const [id,title,cat,typ,first,until,valid,w,h,pages,maxv]=d;
+  const c=cat==='B'?'B':'A',tl=typeOf(d);
+  const out=[TYPTXT[c][tl]||'Ein Sonderfall.'];
+  const f=(first||'').match(/(\d{4})$/);
+  if(first){const y=new Date().getFullYear()-(+f[1]);out.push(`Erstmals ausgestellt am ${fmtD(first)}${y>0?` (vor etwa ${y} Jahr${y===1?'':'en'})`:''}.`)}
+  if(valid==='no')out.push('Dieses Modell ist nicht mehr gültig. Es steht im Register, damit man alte Dokumente erkennen kann.');
+  else if(i===0&&grp.length>1)out.push('Das neueste Modell dieser Art im Register.');
+  else if(i===0)out.push('Das einzige Modell dieser Art im Register.');
+  else if(valid==='yes')out.push('Ein älteres Modell, aber noch gültig. Wer so ein Dokument hat, darf es bis zum Ablauf benutzen. Deshalb sind oft mehrere Modelle gleichzeitig unterwegs.');
+  else out.push('Ein älteres Modell.');
+  if(until)out.push(`Spätestens ab ${fmtD(until)} nicht mehr gültig.`);
+  let diff='';const prev=grp[i+1];
+  if(prev){
+    const ds=[];
+    if(pages&&prev[9]&&pages!==prev[9])ds.push(`${pages} statt ${prev[9]} Seiten`);
+    if(w&&h&&prev[7]&&prev[8]&&(w!==prev[7]||h!==prev[8]))ds.push(`Format ${w} × ${h} mm statt ${prev[7]} × ${prev[8]} mm`);
+    if(maxv&&prev[10]&&maxv!==prev[10])ds.push(`Höchstgültigkeit ${maxv} statt ${prev[10]} Jahre`);
+    diff=ds.length?`<div class="df"><b>Unterschied zum Vorgänger (${esc(prev[0])}):</b> ${esc(ds.join('; '))}.</div>`
+        :`<div class="df"><b>Zum Vorgänger (${esc(prev[0])}):</b> Bei Seiten, Format und Gültigkeit gibt es laut Register keinen Unterschied. Die Änderungen stecken meist in Design und Sicherheitsmerkmalen, die du über den Quelllink findest.</div>`;
+  }
+  return `<p>${esc(out.join(' '))}</p>${diff}`;
+}
+function docCard(d,t,grp,i){
   const [id,title,cat,typ,first,until,valid,w,h,pages,maxv,fr,bk,dt]=d;
-  const tl=({O:t.ord,D:t.dip,S:t.svc})[typ]||t.oth;
-  const fig=(f,cap)=>f?`<figure><img loading="lazy" referrerpolicy="no-referrer" src="${PRADO_IMG}${id}/${f}" alt="${esc(cap)}" data-z="1"><figcaption>${esc(cap)}</figcaption></figure>`:'';
-  const fact=(k,v)=>v?`<div><small>${esc(k)}</small><b>${esc(v)}</b></div>`:'';
-  return `<article class="doc" id="d-${esc(id)}"><button class="star" data-id="${esc(id)}" data-code="${esc(id.slice(0,3))}" aria-pressed="${marks[id]?'true':'false'}">★ ${esc(t.mark||'Merken')}</button><h3>${esc(id)}<span class="badge t">${esc(tl)}</span>${valid==='yes'?`<span class="badge ok">${esc(t.ok)}</span>`:valid==='no'?`<span class="badge no">${esc(t.no)}</span>`:''}</h3>
+  const tl=({O:t.ord,D:t.dip,S:t.svc})[typeOf(d)]||t.oth;
+  const fig=(f,cap)=>f?`<figure><img loading="lazy" referrerpolicy="no-referrer" src="${PRADO_IMG}${id}/${f}" alt="${esc(cap)}" data-z="1"><figcaption ${LAattr}>${esc(cap)}</figcaption></figure>`:'';
+  const fact=(k,v)=>v?`<div ${LAattr}><small>${esc(k)}</small><b>${esc(v)}</b></div>`:'';
+  return `<article class="doc" id="d-${esc(id)}"><button class="star" data-id="${esc(id)}" data-code="${esc(id.slice(0,3))}" aria-pressed="${marks[id]?'true':'false'}">★ ${esc(t.mark||'Merken')}</button><h3>${esc(id)}<span class="badge t" ${LAattr}>${esc(tl)}</span>${valid==='yes'?`<span class="badge ok" ${LAattr}>${esc(t.ok)}</span>`:valid==='no'?`<span class="badge no" ${LAattr}>${esc(t.no)}</span>`:''}${grp.length>1?`<span class="mdl">Modell ${grp.length-i} von ${grp.length}</span>`:''}</h3>
    <div class="ttl">${esc(title)}</div>
+   <div class="exp"><b class="lbl">Erklärung</b>${explain(d,grp,i)}</div>
    <div class="imgs">${fig(fr,t.front)}${fig(bk,t.bck)}${fig(dt,t.data)}</div>
    <div class="facts">${fact(t.issued,first)}${fact(t.size,w&&h?w+' × '+h+' mm':'')}${fact(t.pages,pages)}${fact(t.maxv,maxv?maxv+' '+t.years:'')}</div>
-   <a class="src" target="_blank" rel="noopener noreferrer" href="${PRADO_DOC}${id}/index.html">${esc(t.source)}: PRADO ${esc(id)} ↗</a></article>`;
+   <a class="src" ${LAattr} target="_blank" rel="noopener noreferrer" href="${PRADO_DOC}${id}/index.html">${esc(t.source)}: PRADO ${esc(id)} ↗</a></article>`;
+}
+function groupsOf(list){
+  const g={};list.forEach(d=>{(g[typeOf(d)]=g[typeOf(d)]||[]).push(d)});
+  Object.values(g).forEach(a=>a.sort((x,y)=>dkey(y[4])<dkey(x[4])?-1:dkey(y[4])>dkey(x[4])?1:0));
+  const keys=Object.keys(g).sort((a,b)=>{const ia=TYPORD.indexOf(a),ib=TYPORD.indexOf(b);return (ia<0?99:ia)-(ib<0?99:ib)});
+  return keys.map(k=>[k,g[k]]);
 }
 function detail(code){
   const c=C.find(x=>x[0]===code);if(!c){location.hash='';return}
   const t=T[c[4]];const rtl=RTL.has(c[4]);
-  document.title=c[1]+' · Ausweis-Atlas';document.documentElement.lang=c[4];document.documentElement.dir=rtl?'rtl':'ltr';
+  document.title=c[1]+' · Ausweis-Atlas';document.documentElement.lang='de';document.documentElement.dir='ltr';LAattr=`lang="${c[4]}" dir="auto"`;
   const docs=(DB&&DB[code])||[];
-  const mine=cat=>docs.filter(d=>(d[2]||'').startsWith(cat)).sort((a,b)=>dkey(b[4])<dkey(a[4])?-1:1);
+  const mine=cat=>docs.filter(d=>(d[2]||'').startsWith(cat));
   const A=mine('A'),B=mine('B');
   if(tab==='A'&&!A.length&&B.length)tab='B';if(tab==='B'&&!B.length&&A.length)tab='A';
   const cur=tab==='B'?B:A;
   const what=tab==='B'?'national identity card':'passport';
-  const links=`<div class="links">${!NOPRADO.has(code)?`<a class="btn" target="_blank" rel="noopener noreferrer" href="https://www.consilium.europa.eu/prado/en/prado-documents/${code}/index.html">${esc(t.prado)} ↗</a>`:''}
-    <a class="btn" target="_blank" rel="noopener noreferrer" href="${wiki(c[2],what)}">${esc(t.wiki)} ↗</a>
-    <a class="btn" target="_blank" rel="noopener noreferrer" href="${commons(c[2],what)}">${esc(t.commons)} ↗</a></div>`;
-  app.innerHTML=`<div class="wrap"><button class="back" id="b">${esc(t.back)}</button>
-   <div class="banner"><img src="${flag(c[6])}" alt="" onerror="this.style.display='none'"><div><h1 style="margin:0;font-size:clamp(28px,5vw,44px)">${esc(c[1])}</h1><div class="sub" style="margin:0">${c[0]} · ${esc(c[2])}</div></div></div>
-   <div class="tabs" role="tablist"><button class="tab" role="tab" data-t="A" aria-selected="${tab==='A'}">${esc(t.passport)} (${A.length})</button><button class="tab" role="tab" data-t="B" aria-selected="${tab==='B'}">${esc(t.idcard)} (${B.length})</button></div>
-   ${cur.length?cur.map(d=>docCard(d,t)).join(''):`<p class="empty">${esc(t.none)}</p>`}
-   ${links}<p class="note">${esc(t.note)}</p></div>`;
+  const gr=groupsOf(cur);
+  const sum=cur.length?`<p class="sum"><b>${esc(c[5])}:</b> ${cur.length} Einträge im Register${gr.length?', und zwar '+gr.map(([k,a])=>a.length+' × '+(TYPSING[tab==='B'?'B':'A'][k]||'Sonderfall')).join(', '):''}. Sortiert nach Art, innerhalb jeder Art das neueste Modell zuerst.</p>`:'';
+  const why=cur.length?`<details class="why"><summary>Warum gibt es mehrere, und was bedeuten die Codes?</summary>
+    <p><b>Warum mehrere?</b> Staaten bringen alle paar Jahre ein neues Modell heraus, meist mit besseren Sicherheitsmerkmalen. Die alten bleiben bis zum Ablaufdatum gültig, deshalb sind oft mehrere Modelle gleichzeitig im Umlauf. Dazu kommen Dokumente für besondere Gruppen: Diplomaten, Beamte im Dienst, Notfälle.</p>
+    <p><b>Die Kennung</b>, zum Beispiel <b>AFG-AO-04001</b>: AFG ist das Land. Der erste Buchstabe danach sagt, was es ist (A = Pass, B = Ausweiskarte), der zweite die Art (O = normal, S = Dienst, D = Diplomat, P = vorläufig). Die Zahl ist die Modellnummer im Register.</p>
+    <p><b>Gültig</b> heißt: Das Dokument darf laut Register noch benutzt werden, falls jemand es besitzt. Es heißt nicht, dass es noch neu ausgestellt wird.</p></details>`:'';
+  const links=`<div class="links">${!NOPRADO.has(code)?`<a class="btn" ${LAattr} target="_blank" rel="noopener noreferrer" href="https://www.consilium.europa.eu/prado/en/prado-documents/${code}/index.html">${esc(t.prado)} ↗</a>`:''}
+    <a class="btn" ${LAattr} target="_blank" rel="noopener noreferrer" href="${wiki(c[2],what)}">${esc(t.wiki)} ↗</a>
+    <a class="btn" ${LAattr} target="_blank" rel="noopener noreferrer" href="${commons(c[2],what)}">${esc(t.commons)} ↗</a></div>`;
+  const body=gr.length?gr.map(([k,a])=>`<section class="grp"><h2>${esc(TYPNAME[tab==='B'?'B':'A'][k]||'Sonstige')} (${a.length})</h2>${a.map((d,i)=>docCard(d,t,a,i)).join('')}</section>`).join(''):`<p class="empty" ${LAattr}>${esc(t.none)}</p>`;
+  app.innerHTML=`<div class="wrap"><button class="back" id="b" ${LAattr}>${esc(t.back)}</button>
+   <div class="banner"><img src="${flag(c[6])}" alt="" onerror="this.style.display='none'"><div><h1 ${LAattr} style="margin:0;font-size:clamp(28px,5vw,44px)">${esc(c[1])}</h1><div class="sub" style="margin:0">${c[0]} · ${esc(c[2])}</div></div></div>
+   <div class="tabs" role="tablist"><button class="tab" role="tab" ${LAattr} data-t="A" aria-selected="${tab==='A'}">${esc(t.passport)} (${A.length})</button><button class="tab" role="tab" ${LAattr} data-t="B" aria-selected="${tab==='B'}">${esc(t.idcard)} (${B.length})</button></div>
+   ${sum}${why}${body}
+   ${links}<p class="note" ${LAattr}>${esc(t.note)}</p></div>`;
   document.getElementById('b').addEventListener('click',()=>{location.hash=''});
   pushRecent(code);rails();
 }
@@ -275,36 +345,44 @@ const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v)
 let marks=store.get('atlas-marks',{}),recent=store.get('atlas-recent',[]),IDX=null;
 function buildIdx(){IDX={};for(const code in DB)for(const d of DB[code])IDX[d[0]]={d,code}}
 function pushRecent(code){recent=[code,...recent.filter(x=>x!==code)].slice(0,12);store.set('atlas-recent',recent)}
+let railTab=null;
 function renderRails(){
-  const L=app.querySelector('.rail.left'),R=app.querySelector('.rail.right');if(!L||!R)return;
-  L.innerHTML=`<h4>Zuletzt angesehen</h4>${recent.length?recent.map(c=>{const x=C.find(y=>y[0]===c);return x?`<a class="rc" href="#${c}"><img src="${flag(x[6])}" alt="" onerror="this.style.display='none'"><span>${esc(x[5])}</span></a>`:''}).join(''):'<p class="empty">Noch nichts.</p>'}`;
+  const L=app.querySelector('.rail.left');if(!L)return;
   const ids=Object.keys(marks);
-  R.innerHTML=`<h4>Merkliste (${ids.length})</h4>${ids.length?ids.map(id=>{const m=marks[id],x=IDX&&IDX[id],c=C.find(y=>y[0]===m.code);const fr=x&&x.d[11];return `<div class="mk" data-id="${esc(id)}"><div class="top">${fr?`<img class="th" loading="lazy" referrerpolicy="no-referrer" src="${PRADO_IMG}${id}/${fr}" alt="">`:''}<div><a data-go="${esc(m.code)}" data-doc="${esc(id)}">${esc(id)}</a><small>${esc(c?c[5]:m.code)}</small></div><button class="x" data-rm="${esc(id)}" aria-label="Entfernen">×</button></div><textarea data-note="${esc(id)}" placeholder="Notiz …">${esc(m.note||'')}</textarea></div>`}).join(''):'<p class="empty">Mit ☆ an einem Dokument merkst du es dir. Notizen bleiben in diesem Browser gespeichert.</p>'}
-   ${ids.length?`<div class="rtools"><button data-act="copy">Liste kopieren</button><button data-act="print">Drucken</button><button data-act="clear">Leeren</button></div>`:''}`;
+  if(!railTab)railTab=ids.length?'marks':'recent';
+  const tabs=`<div class="rtabs" role="tablist"><button role="tab" data-rt="marks" aria-selected="${railTab==='marks'}">★ Gemerkt (${ids.length})</button><button role="tab" data-rt="recent" aria-selected="${railTab==='recent'}">Verlauf</button></div>`;
+  let body='';
+  if(railTab==='recent'){
+    body=recent.length?recent.map(c=>{const x=C.find(y=>y[0]===c);return x?`<a class="rc" href="#${c}"><img src="${flag(x[6])}" alt="" onerror="this.style.display='none'"><span>${esc(x[5])}</span></a>`:''}).join(''):'<p class="empty">Noch nichts angesehen.</p>';
+  }else{
+    body=(ids.length?ids.map(id=>{const m=marks[id],x=IDX&&IDX[id],c=C.find(y=>y[0]===m.code);const fr=x&&x.d[11];return `<div class="mk" data-id="${esc(id)}"><div class="top">${fr?`<img class="th" loading="lazy" referrerpolicy="no-referrer" src="${PRADO_IMG}${id}/${fr}" alt="">`:''}<div><a data-go="${esc(m.code)}" data-doc="${esc(id)}">${esc(id)}</a><small>${esc(c?c[5]:m.code)}</small></div><button class="x" data-rm="${esc(id)}" aria-label="Entfernen">×</button></div><textarea data-note="${esc(id)}" placeholder="Notiz …">${esc(m.note||'')}</textarea></div>`}).join(''):'<p class="empty">Mit ★ an einem Dokument merkst du es dir. Notizen bleiben in diesem Browser gespeichert.</p>')
+     +(ids.length?`<div class="rtools"><button data-act="copy">Liste kopieren</button><button data-act="print">Drucken</button><button data-act="clear">Leeren</button></div>`:'');
+  }
+  L.innerHTML=tabs+body;
   const fab=document.getElementById('fab');if(fab)fab.textContent='★ '+ids.length;
 }
 function rails(){
   const w=app.querySelector('.wrap');if(!w)return;
   const sh=document.createElement('div');sh.className='shell';w.replaceWith(sh);
-  sh.innerHTML='<aside class="rail left"></aside>';sh.appendChild(w);
-  sh.insertAdjacentHTML('beforeend','<aside class="rail right" id="rr"></aside>');
-  if(!document.getElementById('fab'))document.body.insertAdjacentHTML('beforeend','<button class="fab" id="fab" aria-label="Merkliste"></button>');
+  sh.innerHTML='<aside class="rail left" id="rl"></aside>';sh.appendChild(w);
+  if(!document.getElementById('fab'))document.body.insertAdjacentHTML('beforeend','<button class="fab" id="fab" aria-label="Gemerkt und Verlauf"></button>');
   renderRails();
 }
+document.addEventListener('click',e=>{const rt=e.target.closest('[data-rt]');if(rt){railTab=rt.dataset.rt;renderRails()}});
 let noteTimer=null;
 document.addEventListener('click',e=>{
   const st=e.target.closest('.star');
   if(st){const id=st.dataset.id;if(marks[id]){delete marks[id];st.setAttribute('aria-pressed','false')}else{marks[id]={code:st.dataset.code,note:'',t:Date.now()};st.setAttribute('aria-pressed','true')}store.set('atlas-marks',marks);renderRails();return}
   const rm=e.target.closest('[data-rm]');if(rm){delete marks[rm.dataset.rm];store.set('atlas-marks',marks);renderRails();const s=document.querySelector('.star[data-id="'+rm.dataset.rm+'"]');if(s)s.setAttribute('aria-pressed','false');return}
   const go=e.target.closest('[data-go]');
-  if(go){const code=go.dataset.go,doc=go.dataset.doc;const m=IDX&&IDX[doc];const want=m&&(m.d[2]==='B'?'B':'A');if(want)tab=want;location.hash.replace('#','')===code?detail(code):(location.hash=code);setTimeout(()=>{const el=document.getElementById('d-'+doc);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('hl');setTimeout(()=>el.classList.remove('hl'),2200)}},350);document.getElementById('rr')?.classList.remove('open');return}
+  if(go){const code=go.dataset.go,doc=go.dataset.doc;const m=IDX&&IDX[doc];const want=m&&(m.d[2]==='B'?'B':'A');if(want)tab=want;location.hash.replace('#','')===code?detail(code):(location.hash=code);setTimeout(()=>{const el=document.getElementById('d-'+doc);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('hl');setTimeout(()=>el.classList.remove('hl'),2200)}},350);document.getElementById('rl')?.classList.remove('open');return}
   const a=e.target.closest('[data-act]');
   if(a){const act=a.dataset.act;
     if(act==='print')window.print();
     if(act==='clear'&&confirm('Merkliste leeren?')){marks={};store.set('atlas-marks',marks);renderRails();document.querySelectorAll('.star').forEach(s=>s.setAttribute('aria-pressed','false'))}
     if(act==='copy'){const txt=Object.keys(marks).map(id=>{const m=marks[id];return id+(m.note?' – '+m.note:'')+' – '+PRADO_DOC+id+'/index.html'}).join('\n');try{navigator.clipboard.writeText(txt);a.textContent='Kopiert ✓';setTimeout(()=>a.textContent='Liste kopieren',1500)}catch(err){}}
     return}
-  if(e.target.closest('#fab')){document.getElementById('rr')?.classList.toggle('open')}
+  if(e.target.closest('#fab')){document.getElementById('rl')?.classList.toggle('open')}
 });
 document.addEventListener('input',e=>{
   const n=e.target.closest('[data-note]');if(!n)return;

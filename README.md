@@ -1,6 +1,6 @@
 # Ausweis-Atlas
 
-Nachschlagewerk: Land wählen und Reisepässe und Personalausweise mit Vorderseite, Rückseite, Datenseite und Eckdaten ansehen. Beschriftung in der Sprache des Landes (38 Sprachen, Arabisch, Persisch, Urdu und Hebräisch von rechts nach links). 213 Länder und Gebiete, mit Suche, Regionenfilter und Flaggen. Seitenränder: Merkliste mit Notizen (Kopieren, Drucken) und "Zuletzt angesehen".
+Nachschlagewerk: Land wählen und Reisepässe und Personalausweise mit Vorderseite, Rückseite, Datenseite und Eckdaten ansehen. Beschriftung in der Sprache des Landes (38 Sprachen, Arabisch, Persisch, Urdu und Hebräisch von rechts nach links). 213 Länder und Gebiete, mit Suche, Regionenfilter und Flaggen. Linkes Panel mit Gemerkten (Notizen, Kopieren, Drucken) und Verlauf, rechts die ganze Fläche für die Dokumente. Zu jedem Dokument gibt es eine deutsche Erklärung (welche Art, wie alt, noch gültig, Unterschied zum Vorgänger).
 
 **Als App installieren:** Auf dem Handy und in Chrome erscheint "Als App installieren". iPhone: Teilen, dann "Zum Home-Bildschirm". Die App startet auch offline, die Dokumentbilder und Flaggen brauchen aber Internet.
 
