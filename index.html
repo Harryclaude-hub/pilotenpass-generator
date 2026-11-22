@@ -57,6 +57,11 @@ main{padding:26px;display:flex;flex-wrap:wrap;gap:30px;align-content:flex-start;
 .f small{display:block;font:5.8pt system-ui;text-transform:uppercase;letter-spacing:.1em;color:color-mix(in srgb,var(--c1) 70%,#555)}
 .f b{font:700 9.5pt Georgia,serif;letter-spacing:.01em}
 .quote{font:italic 10.5pt Georgia,serif;border-inline-start:1mm solid var(--c1);padding:.6mm 3mm;margin:.5mm 0}
+.cover.back{justify-content:center}
+.blank .f b{display:block;min-height:5mm;border-bottom:.25mm dotted #666}
+.blank .quote{min-height:14mm}
+.blank .cp{min-height:16mm;border-bottom:.25mm dotted #666;width:100%}
+.blank .card .f b{min-height:4mm}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:3mm}
 .two b{font-size:8.6pt}
 .sig{height:8mm;margin-bottom:2.5mm;border-bottom:.25mm dotted #555;position:relative}
@@ -104,6 +109,7 @@ main{padding:26px;display:flex;flex-wrap:wrap;gap:30px;align-content:flex-start;
  <fieldset><legend id="t_style"></legend>
   <label id="t_country"></label><select id="country"></select>
   <label id="t_lang"></label><select id="lang"></select>
+  <label style="display:flex;gap:8px;align-items:center;opacity:1;margin:10px 0 2px;font-size:13px;font-weight:600"><input type="checkbox" id="blank" style="width:auto"> <span id="t_blank">Leere Vorlage zum Selbstausfüllen / Blank template</span></label>
   <label id="t_color"></label><select id="theme"></select>
   <label id="t_land"></label><input type="text" id="land">
   <label id="t_typ"></label><input type="text" id="typ">
@@ -174,7 +180,7 @@ function plane(c){
   <path stroke="none" d="M50 17c2 0 3.5 3 3.5 7v15l27 17v6l-27-7.5v14l7 5.5v4.5L50 70.500 39.500 78v-4.500l7-5.500V54l-27 7.500v-6L46.500 39V24c0-4 1.500-7 3.500-7z"/>
   <path fill="none" stroke-width="1.2" d="M22 82c10 6 20 8 28 8s18-2 28-8"/><path fill="none" stroke-width="1.2" d="M26 86c8 5 16 7 24 7s16-2 24-7"/></g></svg>`;
 }
-function photo(key,cls,label){const u=imgs[key];return `<div class="${cls}" style="${u?`background-image:url(${u})`:''}">${u?'':esc(label)}</div>`}
+function photo(key,cls,label){const u=imgs[key];const b=$('blank')&&$('blank').checked;return `<div class="${cls}" style="${u?`background-image:url(${u})`:''}">${u||b?'':esc(label)}</div>`}
 function mrzify(s){return s.toUpperCase().replace(/Ä/g,'AE').replace(/Ö/g,'OE').replace(/Ü/g,'UE').replace(/ß/g,'SS').replace(/[^A-Z0-9]+/g,'<')}
 function pad(s){return s.padEnd(44,'<').slice(0,44)}
 
@@ -182,15 +188,18 @@ function render(){
   const [c1,c2]=$('theme').value.split('|');
   document.documentElement.style.setProperty('--c1',c1);document.documentElement.style.setProperty('--c2',c2);
   const v=Object.fromEntries(fields.map(i=>[i,esc($(i).value)]));
+  const blank=$('blank').checked;
+  if(blank)['nn','vn','nick','rang','gb','nat','fh','ort','gueltig','stempel','zit','c1','c2','c3'].forEach(k=>v[k]='');
   const dir=L.rtl?'rtl':'ltr';
   const fake=`<div class="fake">${esc(L.fake)}</div>`;
   const wmTxt=(esc(L.wm)+' &nbsp;&nbsp;&nbsp; ').repeat(8);
   const wm=`<div class="wm">${Array(9).fill(`<span>${wmTxt}</span>`).join('')}</div>`;
   const micro=`<div class="micro">${(esc($('land').value)+' · '+esc($('typ').value)+' · ').repeat(14)}</div>`;
-  const mrz1=pad('P<'+mrzify($('land').value).slice(0,3)+mrzify($('nn').value)+'<<'+mrzify($('vn').value));
-  const mrz2=pad('SCHERZ<ARTIKEL<'+mrzify($('nick').value)+'<<NO<REAL<ID');
+  const mrz1=blank?pad(''):pad('P<'+mrzify($('land').value).slice(0,3)+mrzify($('nn').value)+'<<'+mrzify($('vn').value));
+  const mrz2=blank?pad(''):pad('SCHERZ<ARTIKEL<'+mrzify($('nick').value)+'<<NO<REAL<ID');
   const vis=n=>`<div class="item"><div class="page inner visa" dir="${dir}">${guilloche(c1,n*1.3)}${wm}<h3><span>${esc(L.visa)}</span><span>${n}</span></h3>${photo('v'+n,'vp',L.photo+' '+n)}<div class="cp">${v['c'+n]}</div>${micro}${fake}</div><span class="cap">${esc(L.visa)} ${n}</span></div>`;
-  const sigName=esc($('vn').value.charAt(0)+'. '+$('nn').value);
+  const sigName=blank?'':esc($('vn').value.charAt(0)+'. '+$('nn').value);
+  $('out').classList.toggle('blank',blank);
   $('out').innerHTML=`
   <div class="item"><div class="page cover" dir="${dir}"><div class="land foil">${v.land}</div>${plane(c2)}<div><div class="typ foil">${v.typ}</div><div class="sub foil">${v.sub}</div></div>${fake}</div><span class="cap">Cover</span></div>
   <div class="item"><div class="page inner" dir="${dir}">${guilloche(c1,0)}${wm}<span class="holo"></span>
@@ -212,8 +221,9 @@ function render(){
     <div class="mrz" style="margin-top:auto">${esc(mrz1)}<br>${esc(mrz2)}</div>
     ${micro}
     ${imgs.fotoMain?`<div class="ghost" style="background-image:url(${imgs.fotoMain})"></div>`:''}
-    <div class="stamp">${v.stempel}</div>${fake}</div><span class="cap">${esc(L.page_data)}</span></div>
+    ${blank?'':`<div class="stamp">${v.stempel}</div>`}${fake}</div><span class="cap">${esc(L.page_data)}</span></div>
   ${vis(1)}${vis(2)}${vis(3)}
+  <div class="item"><div class="page cover back" dir="${dir}">${plane(c2)}${fake}</div><span class="cap">${esc(L.page_back||'Rückseite / Back')}</span></div>
   <div class="item"><div class="card" dir="${dir}">${rosette(c1)}<div class="bar"><span>${v.land}</span><span>${v.typ}</span></div>
     <div class="body">${photo('fotoMain','photo',L.photo)}
      <div><div class="f"><small>${esc(L.surname)} / ${esc(L.given)}</small><b>${v.nn}, ${v.vn}</b></div>
@@ -257,6 +267,7 @@ function init(){
 $('country').addEventListener('change',setCountry);
 $('lang').addEventListener('change',()=>{L=I18N[$('lang').value];applyUI();fillDefaults();render()});
 $('theme').addEventListener('change',render);
+$('blank').addEventListener('change',render);
 fields.forEach(i=>$(i).addEventListener('input',render));
 ['fotoMain','v1','v2','v3'].forEach(id=>$(id).addEventListener('change',e=>{
   const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{imgs[id]=r.result;render()};r.readAsDataURL(f);
