@@ -3,108 +3,215 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
 <title>Ausweis-Atlas</title>
-<meta name="description" content="Nachschlageseite: Wie sehen Reisepass und Personalausweis eines Landes aus? Land wählen und zu den öffentlichen Mustern gehen.">
+<meta name="description" content="Nachschlagewerk: Reisepässe und Personalausweise aller Länder mit Vorderseite, Rückseite und Daten.">
 <style>
-:root{--bg:#f4f2ee;--ink:#1b1c1f;--mut:#6b6d73;--panel:#fff;--line:#dedad2;--acc:#1f4fd8;--acc2:#e9eefc}
-@media (prefers-color-scheme:dark){:root{--bg:#121316;--ink:#eceef2;--mut:#9a9da6;--panel:#1b1d22;--line:#2d3037;--acc:#7da2ff;--acc2:#1c2540}}
+:root{--bg:#0b0d12;--bg2:#12151d;--ink:#eef0f5;--mut:#9aa1b2;--line:rgba(255,255,255,.1);--glass:rgba(255,255,255,.06);--acc:#7da2ff;--acc2:#b48cff}
+@media (prefers-color-scheme:light){:root{--bg:#f3f1ed;--bg2:#fff;--ink:#14161b;--mut:#5d6373;--line:rgba(0,0,0,.1);--glass:rgba(0,0,0,.04);--acc:#2a56d6;--acc2:#7a4bd6}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,"Segoe UI",sans-serif}
-.wrap{max-width:1040px;margin:0 auto;padding:36px 20px 60px}
-h1{font-size:34px;letter-spacing:-.02em;margin:0 0 6px}
-.sub{color:var(--mut);margin:0 0 22px}
-input[type=text]{width:100%;max-width:440px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);font:inherit}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 22px}
-.chip{border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:7px 13px;border-radius:99px;font:14px system-ui;cursor:pointer}
-.chip[aria-pressed=true]{background:var(--acc);border-color:var(--acc);color:#fff}
-#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
-.tile{all:unset;box-sizing:border-box;cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:2px;transition:border-color .15s,transform .15s}
-.tile:hover,.tile:focus-visible{border-color:var(--acc);transform:translateY(-2px)}
-.tile b{font-size:16px}
-.tile span{font:12px ui-monospace,Consolas,monospace;color:var(--mut);letter-spacing:.08em}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,"Segoe UI",sans-serif;min-height:100vh;overflow-x:hidden}
+.orb{position:fixed;width:60vmax;height:60vmax;border-radius:50%;filter:blur(90px);opacity:.28;z-index:0;pointer-events:none;animation:drift 26s ease-in-out infinite alternate}
+.orb.a{background:var(--acc);top:-25vmax;left:-15vmax}
+.orb.b{background:var(--acc2);bottom:-30vmax;right:-20vmax;animation-delay:-9s}
+@keyframes drift{to{transform:translate(8vmax,6vmax) scale(1.08)}}
+@media (prefers-reduced-motion:reduce){.orb{animation:none}*{transition:none!important}}
+.wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:44px 20px 70px}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.05;letter-spacing:-.03em;margin:0 0 10px;font-weight:750}
+h1 em{font-style:normal;background:linear-gradient(100deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mut);margin:0 0 26px;max-width:62ch}
+.stats{display:flex;gap:22px;flex-wrap:wrap;margin:0 0 26px;color:var(--mut);font-size:14px}
+.stats b{color:var(--ink);font-size:22px;display:block;letter-spacing:-.02em}
+input[type=text],input[type=password]{width:100%;max-width:460px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--glass);backdrop-filter:blur(10px);color:var(--ink);font:inherit;outline:none}
+input:focus-visible{border-color:var(--acc)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 24px}
+.chip{border:1px solid var(--line);background:var(--glass);color:var(--ink);padding:8px 14px;border-radius:99px;font:14px system-ui;cursor:pointer}
+.chip[aria-pressed=true]{background:linear-gradient(100deg,var(--acc),var(--acc2));border-color:transparent;color:#fff}
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+.tile{all:unset;box-sizing:border-box;cursor:pointer;position:relative;min-height:104px;border-radius:16px;overflow:hidden;padding:14px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;border:1px solid var(--line);background:#222 center/cover no-repeat;transition:transform .18s,box-shadow .18s}
+.tile::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,10,16,.15),rgba(8,10,16,.82))}
+.tile>*{position:relative}
+.tile:hover,.tile:focus-visible{transform:translateY(-4px) scale(1.015);box-shadow:0 14px 30px rgba(0,0,0,.45)}
+.tile b{font-size:16px;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.tile span{font:11px ui-monospace,Consolas,monospace;opacity:.8;letter-spacing:.1em}
 .empty{color:var(--mut);padding:30px 0}
-.back{all:unset;cursor:pointer;color:var(--acc);margin-bottom:18px;display:inline-block}
+.back{all:unset;cursor:pointer;color:var(--acc);margin-bottom:20px;display:inline-block;font-weight:600}
 .back:hover{text-decoration:underline}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:20px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
-.card h2{margin:0 0 4px;font-size:22px}
-.card p{margin:0 0 16px;color:var(--mut);font-size:14px}
-.btn{display:block;padding:12px 14px;margin-bottom:8px;border-radius:10px;border:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:15px}
-.btn.main{background:var(--acc);border-color:var(--acc);color:#fff}
-.btn:hover{filter:brightness(1.07)}
-.btn small{display:block;opacity:.75;font-size:12px}
-.note{margin-top:26px;font-size:13px;color:var(--mut);max-width:70ch}
-[dir=rtl] .btn,[dir=rtl] .card{text-align:right}
+.banner{display:flex;align-items:center;gap:18px;margin-bottom:8px}
+.banner img{width:84px;height:63px;object-fit:cover;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.4);border:1px solid var(--line)}
+.tabs{display:flex;gap:8px;margin:22px 0 18px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:var(--glass);color:var(--ink);padding:10px 18px;border-radius:12px;font:600 15px system-ui;cursor:pointer}
+.tab[aria-selected=true]{background:linear-gradient(100deg,var(--acc),var(--acc2));border-color:transparent;color:#fff}
+.doc{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.doc h3{margin:0 0 2px;font-size:19px;letter-spacing:-.01em}
+.doc .ttl{color:var(--mut);font-size:13px;margin-bottom:14px;word-break:break-word}
+.badge{display:inline-block;font:600 11px system-ui;padding:3px 9px;border-radius:99px;margin-inline-start:8px;vertical-align:middle;letter-spacing:.04em;text-transform:uppercase}
+.badge.ok{background:rgba(60,200,120,.18);color:#43c97f}.badge.no{background:rgba(255,120,90,.16);color:#ff8a6b}.badge.t{background:var(--glass);color:var(--mut)}
+.imgs{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+figure{margin:0;display:flex;flex-direction:column;gap:6px;align-items:center}
+figure img{height:260px;width:auto;max-width:100%;border-radius:8px;background:var(--glass);border:1px solid var(--line);cursor:zoom-in;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+figcaption{font-size:12px;color:var(--mut)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px 18px;margin:0 0 14px}
+.facts div small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut)}
+.facts div b{font-weight:600}
+.src{color:var(--acc);font-size:14px;text-decoration:none}
+.src:hover{text-decoration:underline}
+.links{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.btn{display:inline-block;padding:11px 15px;border-radius:12px;border:1px solid var(--line);background:var(--glass);color:var(--ink);text-decoration:none;font-size:15px}
+.btn:hover{border-color:var(--acc)}
+.note{margin-top:30px;font-size:13px;color:var(--mut);max-width:72ch}
+#lb{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:50;display:none;align-items:center;justify-content:center;padding:20px;cursor:zoom-out}
+#lb img{max-width:100%;max-height:100%;border-radius:10px}
+.gate{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.gate .box{width:100%;max-width:380px;text-align:center;background:var(--glass);border:1px solid var(--line);border-radius:24px;padding:34px 26px;backdrop-filter:blur(16px)}
+.gate h1{font-size:34px}
+.gate input{text-align:center;font-size:30px;letter-spacing:.5em;padding:14px 10px 14px 24px;max-width:240px}
+.gate p{color:var(--mut);font-size:14px;min-height:1.4em}
+@media (max-width:600px){figure img{height:200px}}
 </style>
 </head>
 <body>
-<div class="wrap" id="app"></div>
+<div class="orb a"></div><div class="orb b"></div>
+<div id="lb"><img alt=""></div>
+<div id="app"></div>
 <script>
-/* Sprache je Land: nur die wenigen Beschriftungen. Die Seiten dahinter (PRADO, Wikipedia, Commons) sind in der Regel englisch. */
+/* Zugangscode (4 Ziffern): nur eine Tuersteher-Sperre im Browser, kein echter Schutz. */
+const PIN_HASH='54f539ff2d7c783b7ffbc6f088e12239884bd32b53b07858cb92a647640b87dd';
+const app=document.getElementById('app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+let fails=0,lockUntil=0;
+function isOpen(){try{return sessionStorage.getItem('atlas-ok')==='1'}catch(e){return false}}
+function gate(){
+  document.title='Ausweis-Atlas';
+  app.innerHTML=`<div class="gate"><div class="box"><h1><em>Ausweis</em>-Atlas</h1><p>Zugangscode / Access code</p><input id="pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" aria-label="Code"><p id="msg"></p></div></div>`;
+  const i=document.getElementById('pin'),m=document.getElementById('msg');i.focus();
+  i.addEventListener('input',async()=>{
+    i.value=i.value.replace(/\D/g,'');
+    if(i.value.length<4)return;
+    if(Date.now()<lockUntil){m.textContent='Bitte kurz warten / Please wait';i.value='';return}
+    if(await sha('atlas-'+i.value)===PIN_HASH){try{sessionStorage.setItem('atlas-ok','1')}catch(e){}route()}
+    else{fails++;i.value='';m.textContent='Falscher Code / Wrong code';if(fails>=5){lockUntil=Date.now()+30000;fails=0}}
+  });
+}
+
 const T={
-de:{passport:'Reisepass',idcard:'Personalausweis',prado:'Offizielle Muster ansehen',pradoS:'PRADO, Register des Rates der EU',wiki:'Beschreibung und Bilder',wikiS:'Wikipedia',commons:'Fotos von Mustern',commonsS:'Wikimedia Commons',back:'← Alle Länder',note:'Diese Seite zeigt keine Dokumente selbst, sondern führt zu öffentlichen Quellen. Es sind Anschauungsmuster, keine Vorlagen zum Nachbauen.'},
-en:{passport:'Passport',idcard:'National ID card',prado:'View official specimens',pradoS:'PRADO, Council of the EU register',wiki:'Description and images',wikiS:'Wikipedia',commons:'Specimen photos',commonsS:'Wikimedia Commons',back:'← All countries',note:'This page does not show documents itself, it links to public sources. These are for reference, not templates to copy.'},
-fr:{passport:'Passeport',idcard:'Carte d\'identité',prado:'Voir les spécimens officiels',pradoS:'PRADO, registre du Conseil de l\'UE',wiki:'Description et images',wikiS:'Wikipédia',commons:'Photos de spécimens',commonsS:'Wikimedia Commons',back:'← Tous les pays',note:'Cette page n\'affiche aucun document, elle renvoie vers des sources publiques. Ce sont des exemples à consulter, pas des modèles à copier.'},
-es:{passport:'Pasaporte',idcard:'Documento de identidad',prado:'Ver especímenes oficiales',pradoS:'PRADO, registro del Consejo de la UE',wiki:'Descripción e imágenes',wikiS:'Wikipedia',commons:'Fotos de especímenes',commonsS:'Wikimedia Commons',back:'← Todos los países',note:'Esta página no muestra documentos, enlaza a fuentes públicas. Son ejemplos para consultar, no plantillas para copiar.'},
-it:{passport:'Passaporto',idcard:'Carta d\'identità',prado:'Vedi i campioni ufficiali',pradoS:'PRADO, registro del Consiglio UE',wiki:'Descrizione e immagini',wikiS:'Wikipedia',commons:'Foto di campioni',commonsS:'Wikimedia Commons',back:'← Tutti i paesi',note:'Questa pagina non mostra documenti, rimanda a fonti pubbliche. Sono esempi da consultare, non modelli da copiare.'},
-pt:{passport:'Passaporte',idcard:'Cartão de identificação',prado:'Ver espécimes oficiais',pradoS:'PRADO, registo do Conselho da UE',wiki:'Descrição e imagens',wikiS:'Wikipédia',commons:'Fotos de espécimes',commonsS:'Wikimedia Commons',back:'← Todos os países',note:'Esta página não mostra documentos, remete para fontes públicas. São exemplos para consulta, não modelos para copiar.'},
-tr:{passport:'Pasaport',idcard:'Kimlik kartı',prado:'Resmi örnekleri gör',pradoS:'PRADO, AB Konseyi kaydı',wiki:'Açıklama ve görseller',wikiS:'Vikipedi',commons:'Örnek fotoğrafları',commonsS:'Wikimedia Commons',back:'← Tüm ülkeler',note:'Bu sayfa belge göstermez, herkese açık kaynaklara yönlendirir. Başvuru içindir, kopyalanacak şablon değildir.'},
-ru:{passport:'Паспорт',idcard:'Удостоверение личности',prado:'Официальные образцы',pradoS:'PRADO, реестр Совета ЕС',wiki:'Описание и изображения',wikiS:'Википедия',commons:'Фото образцов',commonsS:'Wikimedia Commons',back:'← Все страны',note:'Эта страница сама не показывает документы, а ведёт к открытым источникам. Это справочный материал, а не шаблоны для копирования.'},
-pl:{passport:'Paszport',idcard:'Dowód osobisty',prado:'Zobacz oficjalne wzory',pradoS:'PRADO, rejestr Rady UE',wiki:'Opis i obrazy',wikiS:'Wikipedia',commons:'Zdjęcia wzorów',commonsS:'Wikimedia Commons',back:'← Wszystkie kraje',note:'Ta strona nie pokazuje dokumentów, prowadzi do publicznych źródeł. To materiał poglądowy, nie szablony do kopiowania.'},
-nl:{passport:'Paspoort',idcard:'Identiteitskaart',prado:'Officiële specimens bekijken',pradoS:'PRADO, register van de Raad van de EU',wiki:'Beschrijving en afbeeldingen',wikiS:'Wikipedia',commons:'Foto\'s van specimens',commonsS:'Wikimedia Commons',back:'← Alle landen',note:'Deze pagina toont zelf geen documenten, maar verwijst naar openbare bronnen. Ter illustratie, geen sjablonen om na te maken.'},
-hr:{passport:'Putovnica',idcard:'Osobna iskaznica',prado:'Pogledaj službene uzorke',pradoS:'PRADO, registar Vijeća EU',wiki:'Opis i slike',wikiS:'Wikipedija',commons:'Fotografije uzoraka',commonsS:'Wikimedia Commons',back:'← Sve zemlje',note:'Ova stranica sama ne prikazuje isprave, već vodi na javne izvore. Služi kao informacija, a ne kao predložak za kopiranje.'},
-el:{passport:'Διαβατήριο',idcard:'Ταυτότητα',prado:'Επίσημα δείγματα',pradoS:'PRADO, μητρώο του Συμβουλίου της ΕΕ',wiki:'Περιγραφή και εικόνες',wikiS:'Βικιπαίδεια',commons:'Φωτογραφίες δειγμάτων',commonsS:'Wikimedia Commons',back:'← Όλες οι χώρες',note:'Η σελίδα δεν δείχνει η ίδια έγγραφα, παραπέμπει σε δημόσιες πηγές. Είναι για ενημέρωση, όχι πρότυπα προς αντιγραφή.'},
-sv:{passport:'Pass',idcard:'ID-kort',prado:'Se officiella exemplar',pradoS:'PRADO, EU-rådets register',wiki:'Beskrivning och bilder',wikiS:'Wikipedia',commons:'Foton av exemplar',commonsS:'Wikimedia Commons',back:'← Alla länder',note:'Sidan visar inga handlingar själv utan länkar till offentliga källor. Det är informationsmaterial, inte mallar att kopiera.'},
-ar:{passport:'جواز السفر',idcard:'بطاقة الهوية',prado:'عرض النماذج الرسمية',pradoS:'PRADO، سجل مجلس الاتحاد الأوروبي',wiki:'الوصف والصور',wikiS:'ويكيبيديا',commons:'صور النماذج',commonsS:'ويكيميديا كومنز',back:'→ كل الدول',note:'لا تعرض هذه الصفحة وثائق بنفسها، بل تحيل إلى مصادر عامة. هي للاطلاع وليست قوالب للنسخ.'}
+de:{passport:'Reisepass',idcard:'Personalausweis',prado:'Offizielle Muster im Register',wiki:'Beschreibung und Bilder',commons:'Fotos von Mustern',back:'← Alle Länder',note:'Bilder und Angaben stammen aus PRADO, dem öffentlichen Dokumentenregister des Rates der EU, und werden von dort geladen. Anschauungsmaterial zum Nachschlagen, keine Vorlagen zum Nachbauen.'},
+en:{passport:'Passport',idcard:'National ID card',prado:'Official specimens in the register',wiki:'Description and images',commons:'Specimen photos',back:'← All countries',note:'Images and data come from PRADO, the public document register of the Council of the EU, and are loaded from there. Reference material, not templates to copy.'},
+fr:{passport:'Passeport',idcard:'Carte d\'identité',prado:'Spécimens officiels du registre',wiki:'Description et images',commons:'Photos de spécimens',back:'← Tous les pays',note:'Images et données proviennent de PRADO, le registre public des documents du Conseil de l\'UE, et sont chargées depuis ce site. Matériel de consultation, pas des modèles à copier.'},
+es:{passport:'Pasaporte',idcard:'Documento de identidad',prado:'Especímenes oficiales del registro',wiki:'Descripción e imágenes',commons:'Fotos de especímenes',back:'← Todos los países',note:'Las imágenes y datos proceden de PRADO, el registro público de documentos del Consejo de la UE, y se cargan desde allí. Material de consulta, no plantillas para copiar.'},
+it:{passport:'Passaporto',idcard:'Carta d\'identità',prado:'Campioni ufficiali del registro',wiki:'Descrizione e immagini',commons:'Foto di campioni',back:'← Tutti i paesi',note:'Immagini e dati provengono da PRADO, il registro pubblico dei documenti del Consiglio UE, e sono caricati da lì. Materiale di consultazione, non modelli da copiare.'},
+pt:{passport:'Passaporte',idcard:'Cartão de identificação',prado:'Espécimes oficiais do registo',wiki:'Descrição e imagens',commons:'Fotos de espécimes',back:'← Todos os países',note:'Imagens e dados vêm do PRADO, o registo público de documentos do Conselho da UE, e são carregados de lá. Material de consulta, não modelos para copiar.'},
+tr:{passport:'Pasaport',idcard:'Kimlik kartı',prado:'Kayıttaki resmi örnekler',wiki:'Açıklama ve görseller',commons:'Örnek fotoğrafları',back:'← Tüm ülkeler',note:'Görseller ve bilgiler AB Konseyi\'nin herkese açık belge kaydı PRADO\'dan gelir ve oradan yüklenir. Başvuru içindir, kopyalanacak şablon değildir.'},
+ru:{passport:'Паспорт',idcard:'Удостоверение личности',prado:'Официальные образцы в реестре',wiki:'Описание и изображения',commons:'Фото образцов',back:'← Все страны',note:'Изображения и данные взяты из PRADO, открытого реестра документов Совета ЕС, и загружаются оттуда. Справочный материал, а не шаблоны для копирования.'},
+pl:{passport:'Paszport',idcard:'Dowód osobisty',prado:'Oficjalne wzory w rejestrze',wiki:'Opis i obrazy',commons:'Zdjęcia wzorów',back:'← Wszystkie kraje',note:'Obrazy i dane pochodzą z PRADO, publicznego rejestru dokumentów Rady UE, i są stamtąd ładowane. Materiał poglądowy, nie szablony do kopiowania.'},
+nl:{passport:'Paspoort',idcard:'Identiteitskaart',prado:'Officiële specimens in het register',wiki:'Beschrijving en afbeeldingen',commons:'Foto\'s van specimens',back:'← Alle landen',note:'Afbeeldingen en gegevens komen van PRADO, het openbare documentenregister van de Raad van de EU, en worden daar geladen. Naslagmateriaal, geen sjablonen om na te maken.'},
+hr:{passport:'Putovnica',idcard:'Osobna iskaznica',prado:'Službeni uzorci u registru',wiki:'Opis i slike',commons:'Fotografije uzoraka',back:'← Sve zemlje',note:'Slike i podaci potječu iz PRADO-a, javnog registra isprava Vijeća EU, i učitavaju se odande. Materijal za informiranje, ne predlošci za kopiranje.'},
+el:{passport:'Διαβατήριο',idcard:'Ταυτότητα',prado:'Επίσημα δείγματα στο μητρώο',wiki:'Περιγραφή και εικόνες',commons:'Φωτογραφίες δειγμάτων',back:'← Όλες οι χώρες',note:'Οι εικόνες και τα στοιχεία προέρχονται από το PRADO, το δημόσιο μητρώο εγγράφων του Συμβουλίου της ΕΕ. Υλικό αναφοράς, όχι πρότυπα προς αντιγραφή.'},
+sv:{passport:'Pass',idcard:'ID-kort',prado:'Officiella exemplar i registret',wiki:'Beskrivning och bilder',commons:'Foton av exemplar',back:'← Alla länder',note:'Bilder och uppgifter kommer från PRADO, EU-rådets öppna dokumentregister, och laddas därifrån. Referensmaterial, inte mallar att kopiera.'},
+ar:{passport:'جواز السفر',idcard:'بطاقة الهوية',prado:'النماذج الرسمية في السجل',wiki:'الوصف والصور',commons:'صور النماذج',back:'→ كل الدول',note:'الصور والبيانات من PRADO، السجل العام للوثائق في مجلس الاتحاد الأوروبي، وتُحمَّل منه. مادة للاطلاع وليست قوالب للنسخ.'}
 };
-/* Alle Länder: ISO3:ISO2:Region. Region: EU Europa, NA Nordamerika, AS Asien, NAF Nordafrika/Naher Osten, SA Lateinamerika, AF Afrika, OC Ozeanien.
-   PRADO (Register des Rates der EU) hat für jedes dieser Länder eine Seite, außer den im Code unter NOPRADO genannten (geprüft am 22.11.2026). */
+const T2={
+de:'Vorderseite|Rückseite|Datenseite|Erstmals ausgestellt|Format|Seiten|Höchstgültigkeit|aktuell gültig|nicht mehr gültig|Quelle|Keine Muster im Register|Gewöhnlich|Diplomatisch|Dienst|Sonstige|Jahre',
+en:'Front|Back|Data page|First issued|Size|Pages|Max. validity|currently valid|no longer valid|Source|No specimens in the register|Ordinary|Diplomatic|Service|Other|years',
+fr:'Recto|Verso|Page des données|Première émission|Format|Pages|Validité max.|actuellement valable|plus valable|Source|Aucun spécimen dans le registre|Ordinaire|Diplomatique|Service|Autre|ans',
+es:'Anverso|Reverso|Página de datos|Primera emisión|Tamaño|Páginas|Validez máx.|vigente|ya no válido|Fuente|Sin especímenes en el registro|Ordinario|Diplomático|Servicio|Otro|años',
+it:'Fronte|Retro|Pagina dei dati|Prima emissione|Formato|Pagine|Validità max.|attualmente valido|non più valido|Fonte|Nessun campione nel registro|Ordinario|Diplomatico|Servizio|Altro|anni',
+pt:'Frente|Verso|Página de dados|Primeira emissão|Tamanho|Páginas|Validade máx.|atualmente válido|já não válido|Fonte|Sem espécimes no registo|Ordinário|Diplomático|Serviço|Outro|anos',
+tr:'Ön yüz|Arka yüz|Bilgi sayfası|İlk düzenleme|Boyut|Sayfa|Azami geçerlilik|şu an geçerli|artık geçerli değil|Kaynak|Kayıtta örnek yok|Olağan|Diplomatik|Hizmet|Diğer|yıl',
+ru:'Лицевая сторона|Оборот|Страница данных|Впервые выдан|Размер|Страниц|Макс. срок|действует|не действует|Источник|В реестре нет образцов|Обычный|Дипломатический|Служебный|Другое|лет',
+pl:'Awers|Rewers|Strona danych|Pierwsze wydanie|Rozmiar|Stron|Maks. ważność|obecnie ważny|już nieważny|Źródło|Brak wzorów w rejestrze|Zwykły|Dyplomatyczny|Służbowy|Inny|lat',
+nl:'Voorzijde|Achterzijde|Gegevenspagina|Eerst uitgegeven|Formaat|Pagina\'s|Max. geldigheid|momenteel geldig|niet meer geldig|Bron|Geen specimens in het register|Gewoon|Diplomatiek|Dienst|Overig|jaar',
+hr:'Prednja strana|Stražnja strana|Stranica s podacima|Prvi put izdano|Veličina|Stranica|Maks. valjanost|trenutno vrijedi|više ne vrijedi|Izvor|Nema uzoraka u registru|Redovna|Diplomatska|Službena|Ostalo|godina',
+el:'Εμπρός όψη|Πίσω όψη|Σελίδα στοιχείων|Πρώτη έκδοση|Μέγεθος|Σελίδες|Μέγ. ισχύς|σε ισχύ|δεν ισχύει|Πηγή|Δεν υπάρχουν δείγματα στο μητρώο|Κανονικό|Διπλωματικό|Υπηρεσιακό|Άλλο|έτη',
+sv:'Framsida|Baksida|Datasida|Först utfärdat|Storlek|Sidor|Max giltighet|gäller nu|gäller inte längre|Källa|Inga exemplar i registret|Ordinarie|Diplomatiskt|Tjänste|Övrigt|år',
+ar:'الوجه|الظهر|صفحة البيانات|أول إصدار|الحجم|الصفحات|أقصى صلاحية|ساري|غير ساري|المصدر|لا توجد نماذج في السجل|عادي|دبلوماسي|خدمة|آخر|سنوات'
+};
+Object.keys(T2).forEach(k=>{const a=T2[k].split('|');Object.assign(T[k],{front:a[0],bck:a[1],data:a[2],issued:a[3],size:a[4],pages:a[5],maxv:a[6],ok:a[7],no:a[8],source:a[9],none:a[10],ord:a[11],dip:a[12],svc:a[13],oth:a[14],years:a[15]})});
+
 const NOPRADO=new Set(['IDN','ATG','BRB','BOL','MMR','SWZ','FJI','GTM','KIR','MHL','FSM','NRU','NER','PNG','WSM','LCA','VCT','SLB','TON','TTO','VUT','PSE','MUS','PRI']);
 const TAB='AFG:AF:AS AGO:AO:AF ALB:AL:EU AND:AD:EU ARE:AE:NAF ARG:AR:SA ARM:AM:AS AUS:AU:OC AUT:AT:EU AZE:AZ:AS BDI:BI:AF BEL:BE:EU BEN:BJ:AF BFA:BF:AF BGD:BD:AS BGR:BG:EU BHR:BH:NAF BHS:BS:SA BIH:BA:EU BLR:BY:EU BLZ:BZ:SA BRA:BR:SA BRN:BN:AS BTN:BT:AS BWA:BW:AF CAF:CF:AF CAN:CA:NA CHE:CH:EU CHL:CL:SA CHN:CN:AS CIV:CI:AF CMR:CM:AF COD:CD:AF COG:CG:AF COL:CO:SA COM:KM:AF CPV:CV:AF CRI:CR:SA CUB:CU:SA CYP:CY:EU CZE:CZ:EU DEU:DE:EU DJI:DJ:AF DMA:DM:SA DNK:DK:EU DOM:DO:SA DZA:DZ:NAF ECU:EC:SA EGY:EG:NAF ERI:ER:AF ESP:ES:EU EST:EE:EU ETH:ET:AF FIN:FI:EU FRA:FR:EU GAB:GA:AF GBR:GB:EU GEO:GE:AS GHA:GH:AF GIN:GN:AF GMB:GM:AF GNB:GW:AF GNQ:GQ:AF GRC:GR:EU GRD:GD:SA GUY:GY:SA HND:HN:SA HRV:HR:EU HTI:HT:SA HUN:HU:EU IDN:ID:AS IND:IN:AS IRL:IE:EU IRN:IR:NAF IRQ:IQ:NAF ISL:IS:EU ISR:IL:NAF ITA:IT:EU JAM:JM:SA JOR:JO:NAF JPN:JP:AS KAZ:KZ:AS KEN:KE:AF KGZ:KG:AS KHM:KH:AS KNA:KN:SA KOR:KR:AS KWT:KW:NAF LAO:LA:AS LBN:LB:NAF LBR:LR:AF LBY:LY:NAF LIE:LI:EU LKA:LK:AS LSO:LS:AF LTU:LT:EU LUX:LU:EU LVA:LV:EU MAR:MA:NAF MCO:MC:EU MDA:MD:EU MDG:MG:AF MDV:MV:AS MEX:MX:NA MKD:MK:EU MLI:ML:AF MLT:MT:EU MNE:ME:EU MNG:MN:AS MOZ:MZ:AF MRT:MR:NAF MWI:MW:AF MYS:MY:AS NAM:NA:AF NGA:NG:AF NIC:NI:SA NLD:NL:EU NOR:NO:EU NPL:NP:AS NZL:NZ:OC OMN:OM:NAF PAK:PK:AS PAN:PA:SA PER:PE:SA PHL:PH:AS PLW:PW:OC POL:PL:EU PRK:KP:AS PRT:PT:EU PRY:PY:SA QAT:QA:NAF ROU:RO:EU RUS:RU:EU RWA:RW:AF SAU:SA:NAF SDN:SD:NAF SEN:SN:AF SGP:SG:AS SLE:SL:AF SLV:SV:SA SMR:SM:EU SOM:SO:AF SRB:RS:EU SSD:SS:AF STP:ST:AF SUR:SR:SA SVK:SK:EU SVN:SI:EU SWE:SE:EU SYC:SC:AF SYR:SY:NAF TCD:TD:AF TGO:TG:AF THA:TH:AS TKM:TM:AS TLS:TL:AS TUN:TN:NAF TUR:TR:EU TUV:TV:OC TWN:TW:AS TZA:TZ:AF UGA:UG:AF UKR:UA:EU URY:UY:SA USA:US:NA UZB:UZ:AS VAT:VA:EU VEN:VE:SA VNM:VN:AS YEM:YE:NAF ZAF:ZA:AF ZMB:ZM:AF ZWE:ZW:AF ATG:AG:SA BRB:BB:SA BOL:BO:SA GTM:GT:SA MMR:MM:AS SWZ:SZ:AF FJI:FJ:OC KIR:KI:OC MHL:MH:OC FSM:FM:OC NRU:NR:OC NER:NE:AF PNG:PG:OC WSM:WS:OC LCA:LC:SA VCT:VC:SA SLB:SB:OC TON:TO:OC TTO:TT:SA VUT:VU:OC PSE:PS:NAF MUS:MU:AF PRI:PR:SA XKX:XK:EU HKG:HK:AS MAC:MO:AS GIB:GI:EU GRL:GL:NA FRO:FO:EU IMN:IM:EU JEY:JE:EU GGY:GG:EU BMU:BM:NA AIA:AI:SA TCA:TC:SA VGB:VG:SA MSR:MS:SA NCL:NC:OC PYF:PF:OC SHN:SH:AF';
 const LANG={de:'AT DE CH LI',fr:'FR BE',nl:'NL',it:'IT SM VA',es:'ES MX AR CL CO PE VE UY EC CR CU DO GT HN NI PA PY SV BO',pt:'PT BR',tr:'TR',ru:'RU',pl:'PL',hr:'HR BA',el:'GR CY',sv:'SE',ar:'MA DZ TN LY EG AE SA LB JO IQ KW QA BH OM YE SY SD MR'};
 const L2={};for(const k in LANG)LANG[k].split(' ').forEach(i=>L2[i]=k);
 const dn=l=>{try{return new Intl.DisplayNames([l],{type:'region'})}catch(e){return {of:x=>x}}};
 const DN={de:dn('de'),en:dn('en')};
-/* [Code, Name im Land, englischer Name, Region, Sprache, deutscher Name] */
+/* [Code, Name im Land, englischer Name, Region, Sprache, deutscher Name, ISO2] */
 const C=TAB.split(' ').map(x=>{const [c3,c2,r]=x.split(':');const lang=L2[c2]||'en';DN[lang]=DN[lang]||dn(lang);
-  return [c3,DN[lang].of(c2)||c2,DN.en.of(c2)||c2,r,lang,DN.de.of(c2)||c2]}).sort((a,b)=>a[5].localeCompare(b[5],'de'));
+  return [c3,DN[lang].of(c2)||c2,DN.en.of(c2)||c2,r,lang,DN.de.of(c2)||c2,c2]}).sort((a,b)=>a[5].localeCompare(b[5],'de'));
 const REG=[['ALL','Alle / All'],['EU','Europa'],['NA','Nordamerika / North America'],['AS','Asien / Asia'],['NAF','Nordafrika, Naher Osten / N. Africa, Middle East'],['SA','Lateinamerika / Latin America'],['AF','Afrika / Africa'],['OC','Ozeanien / Oceania']];
-let region='ALL',q='';
-const app=document.getElementById('app');
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const flag=c2=>`https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/${c2.toLowerCase()}.svg`;
+const PRADO_IMG='https://www.consilium.europa.eu/prado/images/';
+const PRADO_DOC='https://www.consilium.europa.eu/prado/en/';
 const wiki=(n,w)=>`https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(n+' '+w)}`;
 const commons=(n,w)=>`https://commons.wikimedia.org/w/index.php?search=${encodeURIComponent(n+' '+w)}&ns6=1`;
 
+/* Daten: [id,titel,kategorie,typ,erstmals,bis,gueltig,breite,hoehe,seiten,maxJahre,vorne,hinten,daten] */
+let DB=null,region='ALL',q='',tab='A';
+async function loadDB(){if(DB)return DB;try{DB=await (await fetch('data.json')).json()}catch(e){DB={}}return DB}
+const dkey=s=>{const m=(s||'').match(/(\d{2})\/(\d{2})\/(\d{4})/);return m?m[3]+m[2]+m[1]:'0'};
+
 function home(){
   document.title='Ausweis-Atlas';document.documentElement.lang='de';document.documentElement.dir='ltr';
+  const total=DB?Object.values(DB).reduce((a,b)=>a+b.length,0):0;
   const list=C.filter(c=>(region==='ALL'||c[3]===region)&&(!q||(c[1]+' '+c[2]+' '+c[5]+' '+c[0]).toLowerCase().includes(q)));
-  app.innerHTML=`<h1>Ausweis-Atlas</h1>
-   <p class="sub">Wie sehen Reisepass und Personalausweis eines Landes aus? Land wählen. / Pick a country to see what its passport and ID card look like.</p>
+  app.innerHTML=`<div class="wrap"><h1>Der <em>Ausweis</em>-Atlas</h1>
+   <p class="sub">Reisepässe und Personalausweise der Welt, mit Vorderseite, Rückseite und Daten. Land wählen. / Passports and ID cards of the world. Pick a country.</p>
+   <div class="stats"><div><b>${C.length}</b>Länder / Countries</div><div><b>${total||'…'}</b>Dokumente / Documents</div><div><b>14</b>Sprachen / Languages</div></div>
    <input type="text" id="s" placeholder="Suchen / Search …" value="${esc(q)}" autocomplete="off">
    <div class="chips">${REG.map(r=>`<button class="chip" data-r="${r[0]}" aria-pressed="${r[0]===region}">${esc(r[1])}</button>`).join('')}</div>
-   <div id="grid">${list.map(c=>`<button class="tile" data-c="${c[0]}"><b>${esc(c[5])}</b><span>${c[0]}</span></button>`).join('')||'<p class="empty">–</p>'}</div>
-   <p class="note">Nachschlageseite zu öffentlichen Quellen. Keine Dokumente werden hier gespeichert oder nachgebaut.<br>Reference page linking to public sources. No documents are stored or recreated here.</p>`;
+   <div id="grid">${list.map(c=>`<button class="tile" data-c="${c[0]}" style="background-image:url(${flag(c[6])})"><b>${esc(c[5])}</b><span>${c[0]}</span></button>`).join('')||'<p class="empty">–</p>'}</div>
+   <p class="note">Nachschlagewerk. Daten aus PRADO (Rat der EU). Nur zur Anschauung, keine Vorlagen.</p></div>`;
   const s=document.getElementById('s');
   s.addEventListener('input',e=>{q=e.target.value.toLowerCase();const p=e.target.selectionStart;home();const n=document.getElementById('s');n.focus();n.setSelectionRange(p,p)});
+}
+
+function docCard(d,t){
+  const [id,title,cat,typ,first,until,valid,w,h,pages,maxv,fr,bk,dt]=d;
+  const tl=({O:t.ord,D:t.dip,S:t.svc})[typ]||t.oth;
+  const fig=(f,cap)=>f?`<figure><img loading="lazy" referrerpolicy="no-referrer" src="${PRADO_IMG}${id}/${f}" alt="${esc(cap)}" data-z="1"><figcaption>${esc(cap)}</figcaption></figure>`:'';
+  const fact=(k,v)=>v?`<div><small>${esc(k)}</small><b>${esc(v)}</b></div>`:'';
+  return `<article class="doc"><h3>${esc(id)}<span class="badge t">${esc(tl)}</span>${valid==='yes'?`<span class="badge ok">${esc(t.ok)}</span>`:valid==='no'?`<span class="badge no">${esc(t.no)}</span>`:''}</h3>
+   <div class="ttl">${esc(title)}</div>
+   <div class="imgs">${fig(fr,t.front)}${fig(bk,t.bck)}${fig(dt,t.data)}</div>
+   <div class="facts">${fact(t.issued,first)}${fact(t.size,w&&h?w+' × '+h+' mm':'')}${fact(t.pages,pages)}${fact(t.maxv,maxv?maxv+' '+t.years:'')}</div>
+   <a class="src" target="_blank" rel="noopener noreferrer" href="${PRADO_DOC}${id}/index.html">${esc(t.source)}: PRADO ${esc(id)} ↗</a></article>`;
 }
 function detail(code){
   const c=C.find(x=>x[0]===code);if(!c){location.hash='';return}
   const t=T[c[4]];const rtl=c[4]==='ar';
   document.title=c[1]+' · Ausweis-Atlas';document.documentElement.lang=c[4];document.documentElement.dir=rtl?'rtl':'ltr';
-  const card=(title,what)=>`<section class="card"><h2>${esc(title)}</h2><p>${esc(c[1])}</p>
-   ${!NOPRADO.has(code)?`<a class="btn main" target="_blank" rel="noopener noreferrer" href="https://www.consilium.europa.eu/prado/en/prado-documents/${code}/index.html">${esc(t.prado)}<small>${esc(t.pradoS)}</small></a>`:''}
-   <a class="btn" target="_blank" rel="noopener noreferrer" href="${wiki(c[2],what)}">${esc(t.wiki)}<small>${esc(t.wikiS)}</small></a>
-   <a class="btn" target="_blank" rel="noopener noreferrer" href="${commons(c[2],what)}">${esc(t.commons)}<small>${esc(t.commonsS)}</small></a></section>`;
-  app.innerHTML=`<button class="back" id="b">${esc(t.back)}</button><h1>${esc(c[1])}</h1><p class="sub">${c[0]} · ${esc(c[2])}</p>
-   <div class="cards">${card(t.passport,'passport')}${card(t.idcard,'national identity card')}</div><p class="note">${esc(t.note)}</p>`;
+  const docs=(DB&&DB[code])||[];
+  const mine=cat=>docs.filter(d=>(d[2]||'').startsWith(cat)).sort((a,b)=>dkey(b[4])<dkey(a[4])?-1:1);
+  const A=mine('A'),B=mine('B');
+  if(tab==='A'&&!A.length&&B.length)tab='B';if(tab==='B'&&!B.length&&A.length)tab='A';
+  const cur=tab==='B'?B:A;
+  const what=tab==='B'?'national identity card':'passport';
+  const links=`<div class="links">${!NOPRADO.has(code)?`<a class="btn" target="_blank" rel="noopener noreferrer" href="https://www.consilium.europa.eu/prado/en/prado-documents/${code}/index.html">${esc(t.prado)} ↗</a>`:''}
+    <a class="btn" target="_blank" rel="noopener noreferrer" href="${wiki(c[2],what)}">${esc(t.wiki)} ↗</a>
+    <a class="btn" target="_blank" rel="noopener noreferrer" href="${commons(c[2],what)}">${esc(t.commons)} ↗</a></div>`;
+  app.innerHTML=`<div class="wrap"><button class="back" id="b">${esc(t.back)}</button>
+   <div class="banner"><img src="${flag(c[6])}" alt="" onerror="this.style.display='none'"><div><h1 style="margin:0;font-size:clamp(28px,5vw,44px)">${esc(c[1])}</h1><div class="sub" style="margin:0">${c[0]} · ${esc(c[2])}</div></div></div>
+   <div class="tabs" role="tablist"><button class="tab" role="tab" data-t="A" aria-selected="${tab==='A'}">${esc(t.passport)} (${A.length})</button><button class="tab" role="tab" data-t="B" aria-selected="${tab==='B'}">${esc(t.idcard)} (${B.length})</button></div>
+   ${cur.length?cur.map(d=>docCard(d,t)).join(''):`<p class="empty">${esc(t.none)}</p>`}
+   ${links}<p class="note">${esc(t.note)}</p></div>`;
   document.getElementById('b').addEventListener('click',()=>{location.hash=''});
 }
-function route(){const h=location.hash.replace('#','');h?detail(h):home();window.scrollTo(0,0)}
+async function route(){
+  if(!isOpen()){gate();return}
+  await loadDB();
+  const h=location.hash.replace('#','');h?detail(h):home();window.scrollTo(0,0);
+}
 app.addEventListener('click',e=>{
-  const t=e.target.closest('.tile');if(t){location.hash=t.dataset.c;return}
-  const r=e.target.closest('.chip');if(r){region=r.dataset.r;home()}
+  const z=e.target.closest('img[data-z]');if(z){const lb=document.getElementById('lb');lb.firstElementChild.src=z.src;lb.style.display='flex';return}
+  const tl=e.target.closest('.tile');if(tl){tab='A';location.hash=tl.dataset.c;return}
+  const r=e.target.closest('.chip');if(r){region=r.dataset.r;home();return}
+  const tb=e.target.closest('.tab');if(tb){tab=tb.dataset.t;detail(location.hash.replace('#',''))}
 });
-window.addEventListener('hashchange',route);route();
+document.getElementById('lb').addEventListener('click',e=>{e.currentTarget.style.display='none'});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('lb').style.display='none'});
+window.addEventListener('hashchange',route);
+route();
 </script>
 </body>
 </html>
